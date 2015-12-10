@@ -29,7 +29,9 @@ app.use('/FrontEnd/fonts',express.static(path.join(__dirname, '../FrontEnd/fonts
 //======================OUR REST API MIDDLEWARES===============================
 
 //=========================ROUTERS=============================================
-
+app.get('/logout',function(req,res){
+    req.session.destroy();
+    res.redirect('/');
 
 // käynnistetään serveri
 app.listen(3000);   
