@@ -1,0 +1,26 @@
+{
+  "name": "verkkokaupantilausjarjestelma",
+  "version": "1.0.0",
+  "description": "Ohjelmistokehityksen koulutusohjelman projektityö",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thiltunen78/VerkkokaupanTilausJarjestelma.git"
+  },
+  "author": "Tero Hiltunen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thiltunen78/VerkkokaupanTilausJarjestelma/issues"
+  },
+  "homepage": "https://github.com/thiltunen78/VerkkokaupanTilausJarjestelma#readme",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "express-session": "^1.12.1",
+    "mongoose": "^4.3.0",
+    "uuid": "^2.0.1"
+  }
+}
