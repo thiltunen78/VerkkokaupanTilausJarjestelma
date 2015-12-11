@@ -6,6 +6,11 @@ var uuid = require('uuid');
 // this is used to create a session object for client
 var session = require('express-session');
 
+var customer = require('./modules/customer');
+var order = require('./modules/order');
+var orderHandler = require('./modules/orderHandler');
+var product = require('./modules/product');
+
 // luodaan serveri
 var app = express(); 
 
@@ -27,7 +32,10 @@ app.use('/FrontEnd/controllers',express.static(path.join(__dirname,'../FrontEnd/
 app.use('/FrontEnd/factories',express.static(path.join(__dirname,'../FrontEnd/factories')));
 app.use('/FrontEnd/fonts',express.static(path.join(__dirname, '../FrontEnd/fonts')));
 //======================OUR REST API MIDDLEWARES===============================
-
+app.use('/customer',customer);
+app.use('/order',order);
+app.use('/orderHandler',orderHandler);
+app.use('/product',product);
 //=========================ROUTERS=============================================
 app.get('/logout',function(req,res){
     req.session.destroy();
