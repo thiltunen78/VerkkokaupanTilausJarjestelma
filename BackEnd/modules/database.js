@@ -21,18 +21,20 @@ var Customer = mongoose.model('Customer',{
     phoneNumber:String,
     email:{type:String,unique:true}, // used to log in
     password:String,                 // used to log in
-    orders:[{type:mongoose.Schema.Types.ObjectId,ref:'Order'}]
+    orders:[{type:mongoose.Schema.Types.ObjectId,ref:'Order'}]    
 });
 
 var Order = mongoose.model('Order',{    
     orderId:{type:Number,unique:true},
     createDate:Date,
     status:String,
-    products:[{type:mongoose.Schema.Types.ObjectId,ref:'Product'}]
+    products:[{type:mongoose.Schema.Types.ObjectId,ref:'Product'}],
+    customerId:Number,
+    orderHandlerName:String
 });
 
 var OrderHandler = mongoose.model('OrderHandler',{    
-    name:{type:String,unique:true},
+    orderHandlerName:{type:String,unique:true},
     orders:[{type:mongoose.Schema.Types.ObjectId,ref:'Order'}]       
 });
 

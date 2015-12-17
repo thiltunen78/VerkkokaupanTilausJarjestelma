@@ -34,7 +34,7 @@ app.use('/FrontEnd/fonts',express.static(path.join(__dirname, '../FrontEnd/fonts
 //======================OUR REST API MIDDLEWARES===============================
 app.use('/customer',customer);
 app.use('/order',order);
-app.use('/orderHandler',orderHandler);
+app.use('/orderhandler',orderHandler);
 app.use('/product',product);
 //=========================ROUTERS=============================================
 app.get('/logout',function(req,res){

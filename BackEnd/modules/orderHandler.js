@@ -3,14 +3,14 @@ var queries = require('./queries');
 
 var router = express.Router();
 
-router.post('/loginadmin',function(req,res){
+router.post('/loginorderhandler',function(req,res){
 
-    queries.loginAdmin(req,res);
+    queries.loginOrderHandler(req,res);
 });
 
-router.post('/registeradmin',function(req,res){
+router.post('/registeorderhandler',function(req,res){
     
-    queries.registerAdmin(req,res);
+    queries.registerOrderHandler(req,res);
 });
 
 module.exports = router;
