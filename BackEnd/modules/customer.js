@@ -13,4 +13,8 @@ router.post('/registercustomer',function(req,res){
     queries.registerCustomer(req,res);
 });
 
+router.get('/bycustomerid', function(req,res){    
+    query.getCustomerByCustomerId(req,res);    
+});
+
 module.exports = router;

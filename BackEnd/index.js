@@ -40,6 +40,7 @@ app.use('/product',product);
 app.get('/logout',function(req,res){
     req.session.destroy();
     res.redirect('/');
-
+});
+        
 // käynnistetään serveri
 app.listen(3000);   
