@@ -3,16 +3,11 @@ var database = require('./database');
 exports.registerCustomer = function(req,res)
 {       
     database.Customer.findOne().sort({created_at: -1}).exec(function(err, data)
-    {
-        if(err)
-            req.body.customerId = 1;    
+    {        
+        if(data)
+            req.body.customerId = (data.customerId + 1);
         else
-        {
-            if(data)
-                req.body.customerId = (data.customerId + 1);
-            else
-                req.body.customerId = 1;            
-        }
+            req.body.customerId = 1;                    
     });
     
     var customer = new database.Customer(req.body);
@@ -34,16 +29,13 @@ exports.loginCustomer = function(req,res)
     {    
         if(err)
             res.status(500).send({status:err.message});   
-        else
-        {            
-            if(data)
-            {                
-                req.session.loggedCustomerEmail = data.email;                
-                res.status(200).send({status:"Login successful"});  //200 = ok          
-            }
-            else
-                res.status(401).send({status:"Wrong username or password"});            
+        else if(data)
+        {                
+            req.session.loggedCustomerEmail = data.email;                
+            res.status(200).send({status:"Login successful"});  //200 = ok          
         }
+        else
+            res.status(401).send({status:"Wrong username or password"});            
     });
 }
 
@@ -54,7 +46,7 @@ exports.getCurrentCustomerData = function(req,res)
         if(err)
             res.status(500).send({status:err.message});   
         else
-            res.send(data);            
+            res.send(data);                     
     });
 }
 
@@ -80,16 +72,13 @@ exports.loginOrderHandler = function(req,res)
     {    
         if(err)
             res.status(500).send({status:err.message});   
-        else
-        {            
-            if(data)
-            {                
-                req.session.loggedOrderHandlerName = data.name;                
-                res.status(200).send({status:"Login successful"});  //200 = ok          
-            }
-            else
-                res.status(401).send({status:"Wrong username"});            
+        else if(data)
+        {                
+            req.session.loggedOrderHandlerName = data.name;                
+            res.status(200).send({status:"Login successful"});  //200 = ok          
         }
+        else
+            res.status(401).send({status:"Wrong username"});         
     });
 }
 
@@ -116,7 +105,7 @@ exports.getProductsByGenreAndType = function(req,res)
         if(err)
             res.status(500).send({status:err.message});   
         else
-            res.send(data);        
+            res.send(data);                 
     });
 }
 
@@ -153,14 +142,40 @@ exports.removeProduct = function(req,res)
 
 exports.getOrderByOrderId = function(req,res)
 {    
+    database.Order.findOne({orderId:req.query.orderId},function(err,data)
+    {  
+        if(err)
+            res.status(500).send({status:err.message});   
+        else
+            res.send(data);              
+    });
 }
 
 exports.getOrdersByCustomerId = function(req,res)
-{     
+{
+    database.Customer.findOne({customerId:req.session.customerId}).populate('orders').exec(function(err,data)
+    {
+        if(err)
+            res.status(500).send({status:err.message});
+        else if(data)
+            res.send(data.orders);  
+        else
+            res.send(data);
+                
+    });
 }
 
 exports.getOrdersByHandler = function(req,res)
 {    
+    database.OrderHandler.findOne({orderHandlerName:req.query.orderHandlerName}).populate('orders').exec(function(err,data)
+    {  
+        if(err)
+            res.status(500).send({status:err.message});
+        else if(data)
+            res.send(data.orders);        
+        else
+            res.send(data);        
+    });
 }
 
 exports.getOrdersOfCurrentHandler = function(req,res) 
@@ -172,7 +187,7 @@ exports.getOrdersOfCurrentHandler = function(req,res)
         else if(data)
             res.send(data.orders);        
         else
-            res.redirect('/');        
+            res.send(data);        
     });
 }
 
@@ -185,7 +200,7 @@ exports.getOrdersOfCurrentCustomer = function(req,res)
         else if(data)
             res.send(data.orders);        
         else
-            res.redirect('/');        
+            res.send(data);       
     });
 }
 
