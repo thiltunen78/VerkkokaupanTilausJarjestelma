@@ -13,9 +13,9 @@ router.post('/registercustomer',function(req,res)
     queries.registerCustomer(req,res);
 });
 
-router.get('/bycustomerid', function(req,res)
+router.get('/getcurrentcustomerdata', function(req,res)
 {
-    queries.getCustomerByCustomerId(req,res);    
+    queries.getCurrentCustomerData(req,res);    
 });
 
 module.exports = router;

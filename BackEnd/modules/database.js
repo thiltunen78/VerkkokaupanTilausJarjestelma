@@ -5,13 +5,9 @@ mongoose.connect('mongodb://localhost:27017/verkkokauppa',connectionStatus);
 function connectionStatus(err,ok)
 {    
     if(err)
-    {        
         console.log(err.message);        
-    }
     else
-    {        
-        console.log("Connected to database!");
-    }
+        console.log("Connected to database!");    
 }
 
 var Customer = mongoose.model('Customer',{
@@ -32,10 +28,7 @@ var Order = mongoose.model('Order',{
     createDate:Date,
     status:String,
     
-    products:[{type:mongoose.Schema.Types.ObjectId,ref:'Product'}], // table of product ids
-    
-    customerId:Number,
-    orderHandlerName:String
+    products:[{type:mongoose.Schema.Types.ObjectId,ref:'Product'}], // table of product ids    
 });
 
 var OrderHandler = mongoose.model('OrderHandler',{    

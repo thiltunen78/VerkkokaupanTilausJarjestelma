@@ -5,19 +5,13 @@ exports.registerCustomer = function(req,res)
     database.Customer.findOne().sort({created_at: -1}).exec(function(err, data)
     {
         if(err)
-        {
             req.body.customerId = 1;    
-        }
         else
         {
             if(data)
-            {
                 req.body.customerId = (data.customerId + 1);
-            }
             else
-            {
-                req.body.customerId = 1;
-            }
+                req.body.customerId = 1;            
         }
     });
     
@@ -25,13 +19,9 @@ exports.registerCustomer = function(req,res)
     customer.save(function(err)
     {    
         if(err)
-        {
             res.status(500).send({status:err.message});
-        }
         else
-        {
-            res.status(200).send({status:"Register successful"});
-        }
+            res.status(200).send({status:"Register successful"});        
     });
 }
 
@@ -43,40 +33,28 @@ exports.loginCustomer = function(req,res)
     function(err,data)
     {    
         if(err)
-        {
             res.status(500).send({status:err.message});   
-        }
         else
         {            
             if(data)
             {                
-                req.session.loggedCustomer = data.email;                
+                req.session.loggedCustomerEmail = data.email;                
                 res.status(200).send({status:"Login successful"});  //200 = ok          
             }
             else
-            {
-                res.status(401).send({status:"Wrong username or password"});
-            }
+                res.status(401).send({status:"Wrong username or password"});            
         }
     });
 }
 
-exports.getCustomerByCustomerId = function(req,res)
-{
-    var searchObject = {
-        customerId:req.body.customerId;
-    };
-    
-    database.Customer.findOne(searchObject,function(err,data)
+exports.getCurrentCustomerData = function(req,res)
+{    
+    database.Customer.findOne({email:req.session.loggedCustomerEmail},function(err,data)
     {  
         if(err)
-        {
             res.status(500).send({status:err.message});   
-        }
         else
-        {            
-            res.send(data);
-        }    
+            res.send(data);            
     });
 }
 
@@ -86,13 +64,9 @@ exports.registerOrderHandler = function(req,res)
     OrderHandler.save(function(err)
     {    
         if(err)
-        {
             res.status(500).send({status:err.message});
-        }
         else
-        {
-            res.status(200).send({status:"Register successful"});
-        }
+            res.status(200).send({status:"Register successful"});        
     });
 }
 
@@ -105,36 +79,28 @@ exports.loginOrderHandler = function(req,res)
     database.OrderHandler.findOne(searchObject,function(err,data)
     {    
         if(err)
-        {
             res.status(500).send({status:err.message});   
-        }
         else
         {            
             if(data)
             {                
-                req.session.loggedOrderHandler = data.name;                
+                req.session.loggedOrderHandlerName = data.name;                
                 res.status(200).send({status:"Login successful"});  //200 = ok          
             }
             else
-            {
-                res.status(401).send({status:"Wrong username"});
-            }
+                res.status(401).send({status:"Wrong username"});            
         }
     });
 }
 
 exports.getAllProducts = function(req,res)
 {    
-    db.Product.find(function(err,data)
+    database.Product.find(function(err,data)
     {        
         if(err)
-        {
             res.status(500).send({status:err.message});
-        }
         else
-        {
-            res.send(data);
-        }           
+            res.send(data);                   
     });
 }
 
@@ -148,55 +114,40 @@ exports.getProductsByGenreAndType = function(req,res)
     database.Product.find(searchObject,function(err,data)
     {    
         if(err)
-        {
             res.status(500).send({status:err.message});   
-        }
         else
-        {            
-            res.send(data);   
-        }
+            res.send(data);        
     });
 }
 
 exports.addProduct = function(req,res)
 {        
-    var productTemp = new db.Product(req.body);
+    var productTemp = new database.Product(req.body);
     //Save it to database
     productTemp.save(function(err,newData)
     {
         if(err)
-        {        
             res.status(500).send({status:err.message});
-        }
         else
-        {                
-            res.status(200).json({data:newData});
-        }
+            res.status(200).json({data:newData});       
     });     
 }
 
 exports.removeProduct = function(req,res)
 {    
     var toDelete = [];
-    if(req.query.forDelete instanceof Array)
-    {
-        toDelete = req.query.forDelete;
-    }
-    else
-    {        
-       toDelete.push(req.query.forDelete); 
-    }
     
-    db.Product.remove({_id:{$in:toDelete}},function(err,data)
+    if(req.query.forDelete instanceof Array)
+        toDelete = req.query.forDelete;
+    else
+       toDelete.push(req.query.forDelete); 
+        
+    database.Product.remove({_id:{$in:toDelete}},function(err,data)
     {        
         if(err)
-        {           
             res.status(500).send({message:err.message});
-        }
         else
-        {
-            res.status(200).send({message:'Remove successful'});                    
-        }
+            res.status(200).send({message:'Remove successful'});        
     });
 }
 
@@ -210,6 +161,32 @@ exports.getOrdersByCustomerId = function(req,res)
 
 exports.getOrdersByHandler = function(req,res)
 {    
+}
+
+exports.getOrdersOfCurrentHandler = function(req,res) 
+{  
+    database.OrderHandler.findOne({orderHandlerName:req.session.loggedOrderHandlerName}).populate('orders').exec(function(err,data)
+    {  
+        if(err)
+            res.status(500).send({status:err.message});
+        else if(data)
+            res.send(data.orders);        
+        else
+            res.redirect('/');        
+    });
+}
+
+exports.getOrdersOfCurrentCustomer = function(req,res)
+{        
+    database.Customer.findOne({email:req.session.loggedCustomerEmail}).populate('orders').exec(function(err,data)
+    {
+        if(err)
+            res.status(500).send({status:err.message});
+        else if(data)
+            res.send(data.orders);        
+        else
+            res.redirect('/');        
+    });
 }
 
 exports.getNewOrders = function(req,res)
