@@ -2,12 +2,14 @@ var mongoose = require("mongoose");
 
 mongoose.connect('mongodb://localhost:27017/verkkokauppa',connectionStatus);
 
-function connectionStatus(err,ok){
-    
-    if(err){        
+function connectionStatus(err,ok)
+{    
+    if(err)
+    {        
         console.log(err.message);        
     }
-    else{        
+    else
+    {        
         console.log("Connected to database!");
     }
 }

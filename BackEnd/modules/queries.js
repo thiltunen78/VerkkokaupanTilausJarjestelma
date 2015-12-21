@@ -1,7 +1,26 @@
 var database = require('./database');
 
 exports.registerCustomer = function(req,res)
-{ 
+{       
+    database.Customer.findOne().sort({created_at: -1}).exec(function(err, data)
+    {
+        if(err)
+        {
+            req.body.customerId = 1;    
+        }
+        else
+        {
+            if(data)
+            {
+                req.body.customerId = (data.customerId + 1);
+            }
+            else
+            {
+                req.body.customerId = 1;
+            }
+        }
+    });
+    
     var customer = new database.Customer(req.body);
     customer.save(function(err)
     {    
@@ -11,7 +30,7 @@ exports.registerCustomer = function(req,res)
         }
         else
         {
-            res.status(200).send({status:"Register succesful"});
+            res.status(200).send({status:"Register successful"});
         }
     });
 }
@@ -32,7 +51,7 @@ exports.loginCustomer = function(req,res)
             if(data)
             {                
                 req.session.loggedCustomer = data.email;                
-                res.status(200).send({status:"Ok"});  //200 = ok          
+                res.status(200).send({status:"Login successful"});  //200 = ok          
             }
             else
             {
@@ -42,52 +61,78 @@ exports.loginCustomer = function(req,res)
     });
 }
 
-exports.registerOrderHandler = function(req,res){
- 
-    var orderHandler = new database.OrderHandler(req.body);
-    OrderHandler.save(function(err){
+exports.getCustomerByCustomerId = function(req,res)
+{
+    var searchObject = {
+        customerId:req.body.customerId;
+    };
     
-        if(err){
+    database.Customer.findOne(searchObject,function(err,data)
+    {  
+        if(err)
+        {
+            res.status(500).send({status:err.message});   
+        }
+        else
+        {            
+            res.send(data);
+        }    
+    });
+}
+
+exports.registerOrderHandler = function(req,res)
+{ 
+    var orderHandler = new database.OrderHandler(req.body);
+    OrderHandler.save(function(err)
+    {    
+        if(err)
+        {
             res.status(500).send({status:err.message});
         }
-        else{
-            res.status(200).send({status:"Register succesful"});
+        else
+        {
+            res.status(200).send({status:"Register successful"});
         }
     });
 }
 
-exports.loginOrderHandler = function(req,res){
-
+exports.loginOrderHandler = function(req,res)
+{
     var searchObject = {
         email:req.body.name
     };
     
-    database.OrderHandler.findOne(searchObject,function(err,data){
-    
-        if(err){
+    database.OrderHandler.findOne(searchObject,function(err,data)
+    {    
+        if(err)
+        {
             res.status(500).send({status:err.message});   
         }
-        else{            
-            if(data){                
+        else
+        {            
+            if(data)
+            {                
                 req.session.loggedOrderHandler = data.name;                
-                res.status(200).send({status:"Ok"});  //200 = ok          
+                res.status(200).send({status:"Login successful"});  //200 = ok          
             }
-            else{
+            else
+            {
                 res.status(401).send({status:"Wrong username"});
             }
         }
     });
 }
 
-exports.getAllProducts = function(req,res){
-    
-    db.Product.find(function(err,data){
-        
-        if(err){
-            console.log(err.message);
-            res.send("Error in database");
+exports.getAllProducts = function(req,res)
+{    
+    db.Product.find(function(err,data)
+    {        
+        if(err)
+        {
+            res.status(500).send({status:err.message});
         }
-        else{
+        else
+        {
             res.send(data);
         }           
     });
@@ -95,18 +140,36 @@ exports.getAllProducts = function(req,res){
 
 exports.getProductsByGenreAndType = function(req,res)
 {
-    var genre = req.query.genre;
-    var mediaType = req.query.mediaType;    
+    var searchObject = {
+        genre:req.query.genre,
+        mediaType:req.query.mediaType
+    };
+    
+    database.Product.find(searchObject,function(err,data)
+    {    
+        if(err)
+        {
+            res.status(500).send({status:err.message});   
+        }
+        else
+        {            
+            res.send(data);   
+        }
+    });
 }
 
-exports.addProduct = function(req,res){    
-    
+exports.addProduct = function(req,res)
+{        
     var productTemp = new db.Product(req.body);
     //Save it to database
-    productTemp.save(function(err,newData){
-        if(err){        
-            res.status(500).json({message:'Fail'});
-        }else{                
+    productTemp.save(function(err,newData)
+    {
+        if(err)
+        {        
+            res.status(500).send({status:err.message});
+        }
+        else
+        {                
             res.status(200).json({data:newData});
         }
     });     
@@ -116,18 +179,43 @@ exports.removeProduct = function(req,res)
 {    
     var toDelete = [];
     if(req.query.forDelete instanceof Array)
+    {
         toDelete = req.query.forDelete;
+    }
     else
     {        
        toDelete.push(req.query.forDelete); 
     }
     
-    db.Product.remove({_id:{$in:toDelete}},function(err,data){        
-        if(err){
-            console.log(err);
+    db.Product.remove({_id:{$in:toDelete}},function(err,data)
+    {        
+        if(err)
+        {           
             res.status(500).send({message:err.message});
-        }else{
-            res.status(200).send({message:'Delete success'});                    
+        }
+        else
+        {
+            res.status(200).send({message:'Remove successful'});                    
         }
     });
+}
+
+exports.getOrderByOrderId = function(req,res)
+{    
+}
+
+exports.getOrdersByCustomerId = function(req,res)
+{     
+}
+
+exports.getOrdersByHandler = function(req,res)
+{    
+}
+
+exports.getNewOrders = function(req,res)
+{    
+}
+
+exports.addOrder = function(req,res)
+{    
 }
