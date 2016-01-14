@@ -1,9 +1,9 @@
 var express = require("express"); 
 var path = require("path");
 var bodyParser = require("body-parser");
-// this is used for creating a secret key value for our session cookie
+//for creating a secret key value for session cookie
 var uuid = require('uuid');
-// this is used to create a session object for client
+//to create a session object for client
 var session = require('express-session');
 
 var customer = require('./modules/customer');
@@ -11,8 +11,10 @@ var order = require('./modules/order');
 var orderHandler = require('./modules/orderHandler');
 var product = require('./modules/product');
 
-// luodaan serveri
 var app = express(); 
+
+var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 3000;
+var ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
 //========================MIDDLEWARES========================================
 app.use(session({
@@ -42,5 +44,5 @@ app.get('/logout',function(req,res){
     res.redirect('/');
 });
         
-// käynnistetään serveri
-app.listen(3000);   
+//Listen the given port in given ip address
+app.listen(port,ip); 

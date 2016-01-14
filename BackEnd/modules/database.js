@@ -1,13 +1,22 @@
 var mongoose = require("mongoose");
 
-mongoose.connect('mongodb://localhost:27017/verkkokauppa',connectionStatus);
+//configure mongodb
+var db_name = 'verkkokauppa';
+var mongodb_connection_string = 'mongodb://127.0.0.1:27017/' + db_name;
+
+//take advantage of openshift env vars when available:
+if(process.env.OPENSHIFT_MONGODB_DB_URL){
+  mongodb_connection_string = process.env.OPENSHIFT_MONGODB_DB_URL + db_name;
+}
+
+mongoose.connect(mongodb_connection_string,connectionStatus);
 
 function connectionStatus(err,ok)
 {    
     if(err)
         console.log(err.message);        
     else
-        console.log("Connected to database!");    
+        console.log("Connected to mongodb database!");    
 }
 
 var Customer = mongoose.model('Customer',{
@@ -43,7 +52,8 @@ var Product = mongoose.model('Product',{
     price:Number, // price is in cents (for example 123 == 1.23€)
     description:String,
     mediaType:String,
-    genre:String  
+    genre:String,
+    removed:Boolean
 });
 
 exports.Customer = Customer;

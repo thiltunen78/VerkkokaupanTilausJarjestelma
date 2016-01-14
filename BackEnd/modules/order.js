@@ -5,37 +5,37 @@ var router = express.Router();
 
 router.get('/getorderbyorderid', function(req,res)
 {    
-    query.getOrderByOrderId(req,res);    
+    queries.getOrderByOrderId(req,res);    
 });
 
 router.get('/getordersbycustomerid', function(req,res)
 {    
-    query.getOrdersByCustomerId(req,res);    
+    queries.getOrdersByCustomerId(req,res);    
 });
 
 router.get('/getordersbyhandler', function(req,res)
 {    
-    query.getOrdersByHandler(req,res);    
+    queries.getOrdersByHandler(req,res);    
 });
 
 router.get('/getneworders', function(req,res)
 {    
-    query.getNewOrders(req,res);    
+    queries.getNewOrders(req,res);    
 });
 
 router.get('/getordersofcurrenthandler', function(req,res)
 {    
-    query.getOrdersOfCurrentHandler(req,res);    
+    queries.getOrdersOfCurrentHandler(req,res);    
 });
 
 router.get('/getordersofcurrentcustomer', function(req,res)
 {    
-    query.getOrdersOfCurrentCustomer(req,res);    
+    queries.getOrdersOfCurrentCustomer(req,res);    
 });
 
 router.post('/addorder',function(req,res)
 {
-    query.addOrder(req,res);
+    queries.addOrder(req,res);
 });
 
 module.exports = router;
