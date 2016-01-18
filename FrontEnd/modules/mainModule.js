@@ -1,8 +1,8 @@
-var main_module = angular.module('main_module',['ngRoute','ngResource']);
+var main_module = angular.module('main_module',['ngRoute']);
 
 main_module.config(function($routeProvider){
     
-    $routeProvider.when('/',{
+    $routeProvider./*when('/',{
       
         templateUrl:'partial_mainView.html',
         controller:'controllerMainView'
@@ -37,12 +37,12 @@ main_module.config(function($routeProvider){
         templateUrl:'partial_accountSettingsView.html',
         controller:'controllerAccountSettingsView'
         
-    }).when('/admin',{
+    }).*/when('/admin',{
         
         templateUrl:'partial_adminLoginView.html',
         controller:'controllerAdminLoginView'
         
-    }).when('/createadmin',{
+    })/*.when('/createadmin',{
         
         templateUrl:'partial_createAdminView.html',
         controller:'controllerCreateAdminView'
@@ -72,5 +72,5 @@ main_module.config(function($routeProvider){
         templateUrl:'partial_allProductsView.html',
         controller:'controllerAllProductsView'
         
-    });
+    })*/;
 });
