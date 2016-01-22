@@ -3,9 +3,9 @@ var queries = require('./queries');
 
 var router = express.Router();
 
-router.post('/loginorderhandler',function(req,res)
+router.post('/signinorderhandler',function(req,res)
 {
-    queries.loginOrderHandler(req,res);
+    queries.signInOrderHandler(req,res);
 });
 
 router.post('/registeorderhandler',function(req,res)

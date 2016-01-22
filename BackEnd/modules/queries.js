@@ -20,7 +20,7 @@ exports.registerCustomer = function(req,res)
     });
 }
 
-exports.loginCustomer = function(req,res)
+exports.signInCustomer = function(req,res)
 {
     var searchObject = {email:req.body.email, password:req.body.password};
     
@@ -31,8 +31,8 @@ exports.loginCustomer = function(req,res)
             res.status(500).send({status:err.message});   
         else if(data)
         {                
-            req.session.loggedCustomerEmail = data.email;                
-            res.status(200).send({status:"Login successful"});  //200 = ok          
+            req.session.customerEmail = data.email;                
+            res.status(200).send({status:"Sign in successful"});  //200 = ok          
         }
         else
             res.status(401).send({status:"Wrong username or password"});            
@@ -41,7 +41,7 @@ exports.loginCustomer = function(req,res)
 
 exports.getCurrentCustomerData = function(req,res)
 {    
-    database.Customer.findOne({email:req.session.loggedCustomerEmail},function(err,data)
+    database.Customer.findOne({email:req.session.customerEmail},function(err,data)
     {  
         if(err)
             res.status(500).send({status:err.message});   
@@ -62,7 +62,7 @@ exports.registerOrderHandler = function(req,res)
     });
 }
 
-exports.loginOrderHandler = function(req,res)
+exports.signInOrderHandler = function(req,res)
 {
     var searchObject = {
         email:req.body.name
@@ -74,8 +74,8 @@ exports.loginOrderHandler = function(req,res)
             res.status(500).send({status:err.message});   
         else if(data)
         {                
-            req.session.loggedOrderHandlerName = data.name;                
-            res.status(200).send({status:"Login successful"});  //200 = ok          
+            req.session.orderHandlerName = data.name;                
+            res.status(200).send({status:"Sign in successful"});  //200 = ok          
         }
         else
             res.status(401).send({status:"Wrong username"});         
@@ -180,7 +180,7 @@ exports.getOrdersByHandler = function(req,res)
 
 exports.getOrdersOfCurrentHandler = function(req,res) 
 {  
-    database.OrderHandler.findOne({orderHandlerName:req.session.loggedOrderHandlerName}).populate('orders').exec(function(err,data)
+    database.OrderHandler.findOne({orderHandlerName:req.session.orderHandlerName}).populate('orders').exec(function(err,data)
     {  
         if(err)
             res.status(500).send({status:err.message});
@@ -193,7 +193,7 @@ exports.getOrdersOfCurrentHandler = function(req,res)
 
 exports.getOrdersOfCurrentCustomer = function(req,res)
 {        
-    database.Customer.findOne({email:req.session.loggedCustomerEmail}).populate('orders').exec(function(err,data)
+    database.Customer.findOne({email:req.session.customerEmail}).populate('orders').exec(function(err,data)
     {
         if(err)
             res.status(500).send({status:err.message});

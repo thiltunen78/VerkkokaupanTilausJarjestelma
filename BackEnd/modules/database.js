@@ -42,6 +42,7 @@ var Order = mongoose.model('Order',{
 
 var OrderHandler = mongoose.model('OrderHandler',{    
     orderHandlerName:{type:String,unique:true},
+    password:String,
     
     orders:[{type:mongoose.Schema.Types.ObjectId,ref:'Order'}] // table of order ids      
 });

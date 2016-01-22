@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded());
 app.use('/',express.static(path.join(__dirname,'../FrontEnd/views')));
 app.use('/FrontEnd/css',express.static(path.join(__dirname,'../FrontEnd/css')));
 app.use('/FrontEnd/lib',express.static(path.join(__dirname,'../FrontEnd/lib')));
-app.use('/FrontEnd/module',express.static(path.join(__dirname,'../FrontEnd/module')));
+app.use('/FrontEnd/modules',express.static(path.join(__dirname,'../FrontEnd/modules')));
 app.use('/FrontEnd/controllers',express.static(path.join(__dirname,'../FrontEnd/controllers')));
 app.use('/FrontEnd/factories',express.static(path.join(__dirname,'../FrontEnd/factories')));
 app.use('/FrontEnd/fonts',express.static(path.join(__dirname, '../FrontEnd/fonts')));

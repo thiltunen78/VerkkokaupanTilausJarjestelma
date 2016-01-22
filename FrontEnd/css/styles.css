@@ -1,9 +1,4 @@
-.styles_adminHeader{
-    width: 500px;
-    height: 200px;
-    margin: 50px auto;
-    border: 2px solid black;
-    border-radius: 5px;
-    background-color:lightblue; 
-    padding: 8px;
+.styles_login{    
+    width: 500px; 
+    padding: 8px;    
 }

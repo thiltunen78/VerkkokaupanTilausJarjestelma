@@ -4,73 +4,73 @@ main_module.config(function($routeProvider){
     
     $routeProvider./*when('/',{
       
-        templateUrl:'partial_mainView.html',
-        controller:'controllerMainView'
+        templateUrl:'main.html',
+        controller:'controllerMain'
         
     }).when('/product',{
         
-        templateUrl:'partial_productView.html',
-        controller:'controllerProductView'        
+        templateUrl:'product.html',
+        controller:'controllerProduct'        
         
     }).when('/shoppingcart',{
         
-        templateUrl:'partial_shoppingCartView.html',
-        controller:'controllerShoppingCartView'
+        templateUrl:'shoppingCart.html',
+        controller:'controllerShoppingCart'
         
     }).when('/login',{
         
-        templateUrl:'partial_loginView.html',
-        controller:'controllerLoginView'
+        templateUrl:'signIn.html',
+        controller:'controllerSignIn'
         
     }).when('/createaccount',{
         
-        templateUrl:'partial_createAccountView.html',
-        controller:'controllerCreateAccountView'
+        templateUrl:'createAccount.html',
+        controller:'controllerCreateAccount'
         
     }).when('/account',{
         
-        templateUrl:'partial_accountView.html',
-        controller:'controllerAccountView'
+        templateUrl:'account.html',
+        controller:'controllerAccount'
         
     }).when('/accountsettings',{
         
-        templateUrl:'partial_accountSettingsView.html',
-        controller:'controllerAccountSettingsView'
+        templateUrl:'accountSettings.html',
+        controller:'controllerAccountSettings'
         
     }).*/when('/admin',{
         
-        templateUrl:'partial_adminLoginView.html',
-        controller:'controllerAdminLoginView'
+        templateUrl:'adminSignIn.html',
+        controller:'controllerAdminSignIn'
         
-    })/*.when('/createadmin',{
+    }).when('/createadmin',{
         
-        templateUrl:'partial_createAdminView.html',
-        controller:'controllerCreateAdminView'
+        templateUrl:'createAdmin.html',
+        controller:'controllerCreateAdmin'
         
-    }).when('/adminorders',{
+    })/*.when('/adminorders',{
         
-        templateUrl:'partial_adminOrdersView.html',
-        controller:'controllerAdminOrdersView'
+        templateUrl:'adminOrders.html',
+        controller:'controllerAdminOrders'
         
     }).when('/neworders',{
         
-        templateUrl:'partial_newOrdersView.html',
-        controller:'controllerNewOrdersView'
+        templateUrl:'newOrders.html',
+        controller:'controllerNewOrders'
         
     }).when('/searchorders',{
         
-        templateUrl:'partial_searchOrdersView.html',
-        controller:'controllerSearchOrdersView'
+        templateUrl:'searchOrders.html',
+        controller:'controllerSearchOrders'
         
     }).when('/addnewproduct',{
         
-        templateUrl:'partial_addNewProductView.html',
-        controller:'controllerAddNewProductView'
+        templateUrl:'addNewProduct.html',
+        controller:'controllerAddNewProduct'
         
     }).when('/allproducts',{
         
-        templateUrl:'partial_allProductsView.html',
-        controller:'controllerAllProductsView'
+        templateUrl:'allProducts.html',
+        controller:'controllerAllProducts'
         
     })*/;
 });
