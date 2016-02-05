@@ -1,11 +1,14 @@
-main_module.controller('controllerAdminSignIn',function($scope,factoryAdmin,$location){
+main_module.controller('controllerAdminSignIn',function($scope,factoryAdmin,$location,Flash){
         
-    $scope.loginClicked = function()
-    {        
-        console.log("Sign in pressed");
-                     
-        var waitPromise = factoryAdminLogin.signIn(temp);
-        //wait the response from server
+    $scope.signInClicked = function()
+    { 
+        var signInData = {
+            orderHandlerName:$scope.user,
+            password:$scope.pass
+        }
+        
+        var waitPromise = factoryAdmin.signIn(signInData);
+    
         waitPromise.then(
             function(data)
             {                                               
@@ -13,7 +16,7 @@ main_module.controller('controllerAdminSignIn',function($scope,factoryAdmin,$loc
             },
             function error(data)
             {        
-                console.log("Admin not found!");
+				Flash.create('danger', 'Wrong username or password!', 'custom-class');                
             });
     }   
    

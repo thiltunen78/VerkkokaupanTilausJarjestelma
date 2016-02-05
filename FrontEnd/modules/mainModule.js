@@ -1,4 +1,4 @@
-var main_module = angular.module('main_module',['ngRoute']);
+var main_module = angular.module('main_module',['ngRoute','ngResource','flash']);
 
 main_module.config(function($routeProvider){
     
@@ -47,12 +47,12 @@ main_module.config(function($routeProvider){
         templateUrl:'createAdmin.html',
         controller:'controllerCreateAdmin'
         
-    })/*.when('/adminorders',{
+    }).when('/adminorders',{
         
         templateUrl:'adminOrders.html',
         controller:'controllerAdminOrders'
         
-    }).when('/neworders',{
+    })/*.when('/neworders',{
         
         templateUrl:'newOrders.html',
         controller:'controllerNewOrders'

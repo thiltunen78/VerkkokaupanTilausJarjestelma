@@ -53,7 +53,7 @@ exports.getCurrentCustomerData = function(req,res)
 exports.registerOrderHandler = function(req,res)
 { 
     var orderHandler = new database.OrderHandler(req.body);
-    OrderHandler.save(function(err)
+    orderHandler.save(function(err)
     {    
         if(err)
             res.status(500).send({status:err.message});
@@ -63,9 +63,10 @@ exports.registerOrderHandler = function(req,res)
 }
 
 exports.signInOrderHandler = function(req,res)
-{
+{	
     var searchObject = {
-        email:req.body.name
+        orderHandlerName:req.body.orderHandlerName,
+        password:req.body.password
     };
     
     database.OrderHandler.findOne(searchObject,function(err,data)
@@ -74,11 +75,11 @@ exports.signInOrderHandler = function(req,res)
             res.status(500).send({status:err.message});   
         else if(data)
         {                
-            req.session.orderHandlerName = data.name;                
+            req.session.orderHandlerName = data.orderHandlerName;                
             res.status(200).send({status:"Sign in successful"});  //200 = ok          
         }
         else
-            res.status(401).send({status:"Wrong username"});         
+            res.status(401).send({status:"Wrong username or password"});         
     });
 }
 
@@ -153,7 +154,7 @@ exports.getOrderByOrderId = function(req,res)
 
 exports.getOrdersByCustomerId = function(req,res)
 {
-    database.Customer.findOne({customerId:req.session.customerId}).populate('orders').exec(function(err,data)
+    database.Customer.findOne({customerId:req.query.customerId}).populate('orders').exec(function(err,data)
     {
         if(err)
             res.status(500).send({status:err.message});

@@ -8,7 +8,7 @@ router.post('/signinorderhandler',function(req,res)
     queries.signInOrderHandler(req,res);
 });
 
-router.post('/registeorderhandler',function(req,res)
+router.post('/registerorderhandler',function(req,res)
 {        
     queries.registerOrderHandler(req,res);
 });
