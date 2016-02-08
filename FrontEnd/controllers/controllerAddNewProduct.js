@@ -2,9 +2,9 @@ main_module.controller('controllerAddNewProduct',function($scope,factoryAdmin,$l
 
 	$scope.navbarData = {
 		
-		urls:['#/adminorders','#/neworders','#/searchorders','#/addnewproduct','#/allproducts','#/logout'],
-		texts:['My Orders','New Orders','Search Orders','Add New Product','All Products','Logout'],
-        classes:['','','','active','','']
+		urls:['#/adminorders','#/neworders','#/searchorders','#/addnewproduct','#/allproducts'],
+		texts:['My Orders','New Orders','Search Orders','Add New Product','All Products'],
+        classes:['','','','active','']
 	}      
    
 });

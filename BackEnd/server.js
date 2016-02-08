@@ -42,7 +42,7 @@ app.use('/product',product);
 //=========================ROUTERS=============================================
 app.get('/logout',function(req,res){
     req.session.destroy();
-    res.redirect('/');
+	res.redirect('/');
 });
         
 //Listen the given port in given ip address
