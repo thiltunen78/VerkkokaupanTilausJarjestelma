@@ -1,10 +1,10 @@
-main_module.controller('controllerAdminOrders',function($scope,factoryAdmin,$location,Flash){
+main_module.controller('controllerAllProducts',function($scope,factoryAdmin,$location,Flash){
 
 	$scope.navbarData = {
 		
 		urls:['#/adminorders','#/neworders','#/searchorders','#/addnewproduct','#/allproducts','#/logout'],
 		texts:['My Orders','New Orders','Search Orders','Add New Product','All Products','Logout'],
-        classes:['active','','','','','']
+        classes:['','','','','active','']
 	}      
    
 });

@@ -2,7 +2,7 @@ var main_module = angular.module('main_module',['ngRoute','ngResource','flash'])
 
 main_module.config(function($routeProvider){
     
-    $routeProvider./*when('/',{
+    $routeProvider.when('/',{
       
         templateUrl:'main.html',
         controller:'controllerMain'
@@ -37,7 +37,7 @@ main_module.config(function($routeProvider){
         templateUrl:'accountSettings.html',
         controller:'controllerAccountSettings'
         
-    }).*/when('/admin',{
+    }).when('/admin',{
         
         templateUrl:'adminSignIn.html',
         controller:'controllerAdminSignIn'
@@ -52,7 +52,7 @@ main_module.config(function($routeProvider){
         templateUrl:'adminOrders.html',
         controller:'controllerAdminOrders'
         
-    })/*.when('/neworders',{
+    }).when('/neworders',{
         
         templateUrl:'newOrders.html',
         controller:'controllerNewOrders'
@@ -72,5 +72,5 @@ main_module.config(function($routeProvider){
         templateUrl:'allProducts.html',
         controller:'controllerAllProducts'
         
-    })*/;
+    });
 });
