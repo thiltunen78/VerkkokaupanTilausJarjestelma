@@ -1,5 +1,55 @@
 var main_module = angular.module('main_module',['ngRoute','ngResource','flash']);
 
+//check if user is logged in or not. this function is used in the router below in resolve attribute.
+function loginRequired($q,$resource,$location)
+{ 
+    //Create a promise    
+    var deferred = $q.defer();
+        
+    $resource('/isLogged').query().$promise.then(function success()
+	{    
+        //mark the promise to be solved (or resolved)
+        deferred.resolve();
+        
+        return deferred;
+        
+    },function fail()
+	{        
+        //mark the promise to be failed
+        deferred.reject();
+        
+        //go back to root context
+        $location.path('/');
+        
+        return deferred;    
+    });    
+}
+
+//check if admin is logged in or not. this function is used in the router below in resolve attribute.
+function adminLoginRequired($q,$resource,$location)
+{ 
+    //Create a promise    
+    var deferred = $q.defer();
+        
+    $resource('/isAdminLogged').query().$promise.then(function success()
+	{    
+        //mark the promise to be solved (or resolved)
+        deferred.resolve();
+        
+        return deferred;
+        
+    },function fail()
+	{        
+        //mark the promise to be failed
+        deferred.reject();
+        
+        //go back to admin sign in page
+        $location.path('/admin');
+        
+        return deferred;    
+    });    
+}
+
 main_module.config(function($routeProvider){
     
     $routeProvider.when('/',{
@@ -30,12 +80,14 @@ main_module.config(function($routeProvider){
     }).when('/account',{
         
         templateUrl:'account.html',
-        controller:'controllerAccount'
+        controller:'controllerAccount',
+        resolve:{loginRequired:loginRequired}
         
     }).when('/accountsettings',{
         
         templateUrl:'accountSettings.html',
-        controller:'controllerAccountSettings'
+        controller:'controllerAccountSettings',
+        resolve:{loginRequired:loginRequired}
         
     }).when('/admin',{
         
@@ -50,27 +102,32 @@ main_module.config(function($routeProvider){
     }).when('/adminorders',{
         
         templateUrl:'adminOrders.html',
-        controller:'controllerAdminOrders'
+        controller:'controllerAdminOrders',
+        resolve:{loginRequired:adminLoginRequired}
         
     }).when('/neworders',{
         
         templateUrl:'newOrders.html',
-        controller:'controllerNewOrders'
+        controller:'controllerNewOrders',
+        resolve:{loginRequired:adminLoginRequired}
         
     }).when('/searchorders',{
         
         templateUrl:'searchOrders.html',
-        controller:'controllerSearchOrders'
+        controller:'controllerSearchOrders',
+        resolve:{loginRequired:adminLoginRequired}
         
     }).when('/addnewproduct',{
         
         templateUrl:'addNewProduct.html',
-        controller:'controllerAddNewProduct'
+        controller:'controllerAddNewProduct',
+        resolve:{loginRequired:adminLoginRequired}
         
     }).when('/allproducts',{
         
         templateUrl:'allProducts.html',
-        controller:'controllerAllProducts'
+        controller:'controllerAllProducts',
+        resolve:{loginRequired:adminLoginRequired}
         
     });
 });

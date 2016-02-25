@@ -44,6 +44,26 @@ app.get('/logout',function(req,res){
     req.session.destroy();
 	res.redirect('/');
 });
+
+// this router checks if user is logged in or not
+app.get('/isLogged',function(req,res)              
+{
+    //user is logged in if session contains customerEmail attribute
+    if(req.session.customerEmail)
+        res.status(200).send([{status:'ok'}]);    
+    else
+        res.status(401).send([{status:'unauthorized'}]);
+});
+
+// this router checks if admin is logged in or not
+app.get('/isAdminLogged',function(req,res)              
+{
+    //admin is logged in if session contains orderHandlerName attribute
+    if(req.session.orderHandlerName)
+        res.status(200).send([{status:'ok'}]);    
+    else
+        res.status(401).send([{status:'unauthorized'}]);
+});
         
 //Listen the given port in given ip address
 app.listen(port,ip); 
