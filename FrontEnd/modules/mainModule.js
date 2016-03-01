@@ -6,7 +6,7 @@ function loginRequired($q,$resource,$location)
     //Create a promise    
     var deferred = $q.defer();
         
-    $resource('/isLogged').query().$promise.then(function success()
+    $resource('/customer/isLogged').query().$promise.then(function success()
 	{    
         //mark the promise to be solved (or resolved)
         deferred.resolve();
@@ -31,7 +31,7 @@ function adminLoginRequired($q,$resource,$location)
     //Create a promise    
     var deferred = $q.defer();
         
-    $resource('/isAdminLogged').query().$promise.then(function success()
+    $resource('/orderhandler/isLogged').query().$promise.then(function success()
 	{    
         //mark the promise to be solved (or resolved)
         deferred.resolve();

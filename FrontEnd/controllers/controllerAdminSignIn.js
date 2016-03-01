@@ -9,15 +9,14 @@ main_module.controller('controllerAdminSignIn',function($scope,factoryAdmin,$loc
         
         var waitPromise = factoryAdmin.signIn(signInData);
     
-        waitPromise.then(
-            function(data)
-            {                                               
-                $location.path('/adminorders');            
-            },
-            function error(data)
-            {        
-				Flash.create('danger', 'Wrong username or password!', 'custom-class');                
-            });
+        waitPromise.then(function(data)
+        {                                               
+        	$location.path('/adminorders');            
+        },
+        function error(data)
+        {        
+			Flash.create('danger', 'Wrong username or password!', 'custom-class');                
+        });
     }   
    
 });

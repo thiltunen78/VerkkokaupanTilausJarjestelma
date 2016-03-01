@@ -9,16 +9,15 @@ main_module.controller('controllerCreateAdmin',function($scope,factoryAdmin,$loc
         
         var waitPromise = factoryAdmin.register(registerData);
         
-        waitPromise.then(
-            function(data)
-            {                         
-				Flash.create('success', 'Register succesfull!', 'custom-class');
-                $location.path('/admin');            
-            },
-            function error(data)
-            {        
-                Flash.create('danger', 'Username is in use. Please select another!', 'custom-class');
-            });
+        waitPromise.then(function(data)
+        {                         
+			Flash.create('success', 'Register succesfull!', 'custom-class');
+            $location.path('/admin');            
+        },
+        function error(data)
+        {        
+            Flash.create('danger', 'Username is in use. Please select another!', 'custom-class');
+        });
     }   
    
 });
