@@ -1,11 +1,30 @@
 main_module.factory('factoryAdmin',function($resource){
     
     var factory = {};
-			
-	factory.getSignedInUser = function()
+	
+	factory.signedInUser = "";
+	factory.allProductsArray = [];
+				
+	factory.getSignedInUser = function(setNavBarData)
 	{
-		var req = $resource('/orderhandler/signedinorderhandler',{},{'get':{method:'GET'}});		
-		return req.query().$promise;
+		if(factory.signedInUser.length === 0)
+		{
+			var resource = $resource('/orderhandler/signedinorderhandler',{},{'get':{method:'GET'}});
+            resource.query().$promise.then(function(data)
+			{                
+            	factory.signedInUser = data[0];
+              	setNavBarData(factory.signedInUser);    
+                
+            },function(error)
+			{                
+                factory.signedInUser = "";
+                setNavBarData(factory.signedInUser);
+            });
+		}
+		else
+		{
+			setNavBarData(factory.signedInUser);
+		}
 	}
         
     factory.signIn = function(data)
@@ -22,9 +41,33 @@ main_module.factory('factoryAdmin',function($resource){
 	
 	factory.addProduct = function(data)
 	{                   
+		factory.allProductsArray = [];
+		
         var req = $resource('/product/addproduct',{},{'post':{method:'POST'}});            
         return req.post(data).$promise;        
     }
+	
+	factory.getAllProducts = function(setAllProducts)	
+	{
+		if(factory.allProductsArray.length === 0)
+		{
+            var resource = $resource('/product/getallproducts',{},{'get':{method:'GET'}});
+            resource.query().$promise.then(function(data)
+			{                
+            	factory.allProductsArray = data;
+              	setAllProducts(factory.allProductsArray);    
+                
+            },function(error)
+			{                
+                factory.allProductsArray = [];
+                setAllProducts(factory.allProductsArray);
+            });
+        }
+        else
+		{            
+            setAllProducts(factory.allProductsArray);
+        }	
+	}
         
     return factory;
 });

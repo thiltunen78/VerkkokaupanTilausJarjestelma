@@ -1,12 +1,15 @@
 main_module.controller('controllerAddNewProduct',function($scope,factoryAdmin,$location,Flash){
-
-	var waitPromise = factoryAdmin.getSignedInUser();
-	var signedInUser = "";
 	
-	waitPromise.then(function(data)
-    {                                               
-    	signedInUser = data[0];       
+	$scope.inputArtist = "";
+    $scope.inputAlbum = "";
+	$scope.selectMediaType = "Compact Disc";
+	$scope.selectGenre = "Rock";
+	$scope.inputPrice = "";
+	$scope.inputImage = "";
+	$scope.textareaDescription = "";
 	
+	factoryAdmin.getSignedInUser(function setNavBarData(signedInUser)
+    { 	
 		$scope.navbarData = {		
 			urls:['#/adminorders','#/neworders','#/searchorders','#/addnewproduct','#/allproducts'],
 			texts:['My Orders','New Orders','Search Orders','Add New Product','All Products'],
@@ -27,23 +30,43 @@ main_module.controller('controllerAddNewProduct',function($scope,factoryAdmin,$l
 			description:$scope.textareaDescription,
 			removed:false
         }
-        
+		
+		if((product.artist.length === 0) ||
+			(product.album.length === 0) ||
+			(product.mediaType.length === 0) ||
+			(product.genre.length === 0) ||
+			(product.price.length === 0) ||
+			//(product.image.length === 0) ||
+			(product.description.length === 0))
+		{
+			Flash.create('warning', "Please fill all the fields!", 'custom-class');
+			return;
+		}
+		
+        $('#buttonAdd').attr("disabled", true);
+		
+		console.log(product);
+		
         var waitPromise = factoryAdmin.addProduct(product);
     
         waitPromise.then(function(data)
         {                                               
         	$scope.inputArtist = "";
             $scope.inputAlbum = "";
-			$scope.selectMediaType = "";
-			$scope.selectGenre = "";
+			$scope.selectMediaType = "Compact Disc";
+			$scope.selectGenre = "Rock";
 			$scope.inputPrice = "";
 			$scope.inputImage = "";
 			$scope.textareaDescription = "";
+			
+			$('#buttonAdd').attr("disabled", false);
 			
 			Flash.create('success', "Product added succesfully", 'custom-class');
         },
         function error(data)
         {        
+			$('#buttonAdd').attr("disabled", false);
+			
 			Flash.create('danger', "Error adding product", 'custom-class');                
         });
     }   

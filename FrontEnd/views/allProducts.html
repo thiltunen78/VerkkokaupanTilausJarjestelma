@@ -4,12 +4,39 @@
 
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-sm-4">
-			<h2>All Products</h2>
+		<div class="col-sm-12">
+			<h2>All Products <small>click columns to sort the list</small></h2><br/>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-sm-4">
+		<div class="col-sm-12">
+			<button class="btn btn-default">Remove Selected</button><br/><br/>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12">
+			<table class="table table-hover sortable-theme-bootstrap" data-sortable>
+        		<thead>
+            		<tr>
+						<th data-sortable="false">[]</th>
+                		<th>Artist</th>
+                		<th>Album</th>
+                		<th>Media Type</th>
+						<th>Genre</th>
+						<th data-sortable-type="numeric">Price</th>
+            		</tr>
+        		</thead>
+        		<tbody>
+            		<tr ng-repeat='product in allProducts'>
+						<td><input type="checkbox" ng-click='addToRemove($event,$index,product._id)'></td>
+                		<td>{{product.artist}}</td>
+                		<td>{{product.album}}</td>
+                		<td>{{product.mediaType}}</td>
+						<td>{{product.genre}}</td>
+						<td>{{product.price}}</td>                		
+            		</tr>
+        		</tbody>
+    		</table>
 		</div>
 	</div>
 </div>
