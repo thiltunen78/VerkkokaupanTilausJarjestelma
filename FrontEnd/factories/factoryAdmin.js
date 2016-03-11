@@ -1,5 +1,5 @@
-main_module.factory('factoryAdmin',function($resource){
-    
+main_module.factory('factoryAdmin',function($resource)
+{    
     var factory = {};
 	
 	factory.signedInUser = "";
@@ -68,6 +68,15 @@ main_module.factory('factoryAdmin',function($resource){
             setAllProducts(factory.allProductsArray);
         }	
 	}
+	
+	factory.removeProducts = function(data)
+	{   
+		factory.allProductsArray = [];
+		
+        var resource = $resource('/product/removeproduct',{},{'delete':{method:'DELETE'}});
+        return resource.delete(data).$promise;
+    }
+	
         
     return factory;
 });

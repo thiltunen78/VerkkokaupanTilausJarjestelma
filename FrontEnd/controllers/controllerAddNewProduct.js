@@ -31,6 +31,8 @@ main_module.controller('controllerAddNewProduct',function($scope,factoryAdmin,$l
 			removed:false
         }
 		
+		console.log(product);
+		
 		if((product.artist.length === 0) ||
 			(product.album.length === 0) ||
 			(product.mediaType.length === 0) ||
@@ -44,9 +46,7 @@ main_module.controller('controllerAddNewProduct',function($scope,factoryAdmin,$l
 		}
 		
         $('#buttonAdd').attr("disabled", true);
-		
-		console.log(product);
-		
+				
         var waitPromise = factoryAdmin.addProduct(product);
     
         waitPromise.then(function(data)

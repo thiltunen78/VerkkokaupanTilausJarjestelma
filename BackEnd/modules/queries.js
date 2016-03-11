@@ -125,14 +125,14 @@ exports.addProduct = function(req,res)
 
 exports.removeProduct = function(req,res)
 {    
-    var toDelete = [];
+    var toRemove = [];
     
-    if(req.query.forDelete instanceof Array)
-        toDelete = req.query.forDelete;
+    if(req.query.forRemove instanceof Array)
+    	toRemove = req.query.forRemove;
     else
-       toDelete.push(req.query.forDelete); 
+       	toRemove.push(req.query.forRemove); 
         
-    database.Product.remove({_id:{$in:toDelete}},function(err,data)
+    database.Product.remove({_id:{$in:toRemove}},function(err,data)
     {        
         if(err)
             res.status(500).send({message:err.message});
