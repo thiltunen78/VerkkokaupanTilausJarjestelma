@@ -1,4 +1,4 @@
-main_module.controller('controllerAddNewProduct',function($scope,factoryAdmin,$location,Flash){
+main_module.controller('controllerAddNewProduct',function($scope,factoryAdmin,$location,Flash,Upload){
 	
 	$scope.inputArtist = "";
     $scope.inputAlbum = "";
@@ -19,14 +19,39 @@ main_module.controller('controllerAddNewProduct',function($scope,factoryAdmin,$l
 	}); 
 	
 	$scope.addProductClicked = function()
-    { 
+    {		
+		Upload.upload({
+                url: '/product/uploadimage', //webAPI exposed to upload the file
+                data:{file:$scope.filee} //pass file as data, should be user ng-model
+            }).then(function (resp) { //upload function returns a promise
+                if(resp.data.error_code === 0)
+				{ //validate success
+					Flash.create('success', "image uploaded", 'custom-class');
+                    //$window.alert('Success ' + resp.config.data.file.name + 'uploaded. Response: ');
+                } 
+				else 
+				{
+					Flash.create('danger', "Error uploading image", 'custom-class'); 
+                   // $window.alert('an error occured');
+                }
+            },
+			function (resp)
+			{ //catch error
+                console.log('Error status: ' + resp.status);                
+            }, 
+			function (evt) 
+			{               
+                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+                $scope.progress = 'progress: ' + progressPercentage + '% '; // capture upload progress
+            });
+		
         var product = {
             artist:$scope.inputArtist,
             album:$scope.inputAlbum,
 			mediaType:$scope.selectMediaType,
 			genre:$scope.selectGenre,
-			price:$scope.inputPrice,
-			image:$scope.inputImage,
+			price:$scope.inputPrice,			
 			description:$scope.textareaDescription,
 			removed:false
         }
@@ -37,8 +62,7 @@ main_module.controller('controllerAddNewProduct',function($scope,factoryAdmin,$l
 			(product.album.length === 0) ||
 			(product.mediaType.length === 0) ||
 			(product.genre.length === 0) ||
-			(product.price.length === 0) ||
-			//(product.image.length === 0) ||
+			(product.price.length === 0) ||		
 			(product.description.length === 0))
 		{
 			Flash.create('warning', "Please fill all the fields!", 'custom-class');
@@ -56,7 +80,6 @@ main_module.controller('controllerAddNewProduct',function($scope,factoryAdmin,$l
 			$scope.selectMediaType = "Compact Disc";
 			$scope.selectGenre = "Rock";
 			$scope.inputPrice = "";
-			$scope.inputImage = "";
 			$scope.textareaDescription = "";
 			
 			$('#buttonAdd').attr("disabled", false);

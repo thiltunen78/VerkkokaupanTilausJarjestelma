@@ -17,6 +17,7 @@ var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 3000;
 var ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
 //========================MIDDLEWARES========================================
+
 app.use(session({
     secret:uuid.v1(),
     cookie:{maxAge:1800000}
@@ -39,6 +40,6 @@ app.use('/customer',customer);
 app.use('/order',order);
 app.use('/orderhandler',orderHandler);
 app.use('/product',product);
-        
+
 //Listen the given port in given ip address
 app.listen(port,ip); 

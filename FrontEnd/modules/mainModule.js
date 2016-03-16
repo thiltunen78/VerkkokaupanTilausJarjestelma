@@ -1,4 +1,4 @@
-var main_module = angular.module('main_module',['ngRoute','ngResource','flash']);
+var main_module = angular.module('main_module',['ngRoute','ngResource','flash','ngFileUpload']);
 
 //check if user is logged in or not. this function is used in the router below in resolve attribute.
 function loginRequired($q,$resource,$location)
