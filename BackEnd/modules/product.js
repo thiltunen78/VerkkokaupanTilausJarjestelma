@@ -6,12 +6,10 @@ var router = express.Router();
 
 var storage = multer.diskStorage(
 	{ 	//multers disk storage settings
-        destination: function (req, file, cb) 
-		{
+        destination: function (req, file, cb){
             cb(null, './productimages/')
     	},
-        filename: function (req, file, cb) 
-		{
+        filename: function (req, file, cb){
             var datetimestamp = Date.now();
             cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length -1])
         }

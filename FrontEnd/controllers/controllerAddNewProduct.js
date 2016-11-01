@@ -4,8 +4,7 @@ main_module.controller('controllerAddNewProduct',function($scope,factoryAdmin,$l
     $scope.inputAlbum = "";
 	$scope.selectMediaType = "Compact Disc";
 	$scope.selectGenre = "Rock";
-	$scope.inputPrice = "";
-	$scope.inputImage = "";
+	$scope.inputPrice = "";	
 	$scope.textareaDescription = "";
 	
 	factoryAdmin.getSignedInUser(function setNavBarData(signedInUser)
@@ -25,14 +24,11 @@ main_module.controller('controllerAddNewProduct',function($scope,factoryAdmin,$l
                 data:{file:$scope.filee} //pass file as data, should be user ng-model
             }).then(function (resp) { //upload function returns a promise
                 if(resp.data.error_code === 0)
-				{ //validate success
-					Flash.create('success', "image uploaded", 'custom-class');
-                    //$window.alert('Success ' + resp.config.data.file.name + 'uploaded. Response: ');
+				{ 				
                 } 
 				else 
 				{
-					Flash.create('danger', "Error uploading image", 'custom-class'); 
-                   // $window.alert('an error occured');
+					Flash.create('danger', "Error uploading image", 'custom-class');                    
                 }
             },
 			function (resp)
