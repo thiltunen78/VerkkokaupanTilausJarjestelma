@@ -34,7 +34,7 @@ router.post('/uploadimage', function(req, res)
             return;
         }
         
-		res.json({error_code:0,err_desc:null});
+		res.json({error_code:0,err_desc:null, file: req.file});
     })       
 });
 
