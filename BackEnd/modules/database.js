@@ -54,7 +54,7 @@ var Product = mongoose.model('Product',{
     description:String,
     mediaType:String,
     genre:String,
-	image:String,
+	imageFileName:String,
     removed:Boolean
 });
 
