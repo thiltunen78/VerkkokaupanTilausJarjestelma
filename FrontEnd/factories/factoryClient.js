@@ -1,4 +1,4 @@
-main_module.factory('factory',function($resource)
+main_module.factory('factoryClient',function($resource)
 {    
     var factory = {};
 	
