@@ -1,23 +1,25 @@
 var database = require('./database');
 
 exports.registerCustomer = function(req,res)
-{       
+{ 	
     database.Customer.findOne().sort({created_at: -1}).exec(function(err, data)
     {        
         if(data)
             req.body.customerId = (data.customerId + 1);
         else
-            req.body.customerId = 1;                    
-    });
+            req.body.customerId = 1; 			
+		
+		var customer = new database.Customer(req.body);
+    	customer.save(function(err)
+    	{    
+        	if(err)
+            	res.status(500).send({status:err.message});
+        	else
+            	res.status(200).send({status:"Register successful"});        
+    	});
+    });   
+	
     
-    var customer = new database.Customer(req.body);
-    customer.save(function(err)
-    {    
-        if(err)
-            res.status(500).send({status:err.message});
-        else
-            res.status(200).send({status:"Register successful"});        
-    });
 }
 
 exports.signInCustomer = function(req,res)
