@@ -3,11 +3,12 @@ var queries = require('./queries');
 var multer = require('multer');
 
 var router = express.Router();
+var data_dir = process.env.OPENSHIFT_DATA_DIR || './productimages/';
 
 var storage = multer.diskStorage(
 	{ 	//multers disk storage settings
         destination: function (req, file, cb){
-            cb(null, './productimages/')
+            cb(null, data_dir)
     	},
         filename: function (req, file, cb){
             var datetimestamp = Date.now();
