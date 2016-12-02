@@ -9,17 +9,14 @@
             </button>
 			<h4 class="navbar-text">Record Store Z</h4>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <!--<ul class="nav navbar-nav" ng-repeat="data in navbarData.urls">
-				<li class="{{navbarData.classes[$index]}}"><a href="{{navbarData.urls[$index]}}">{{navbarData.texts[$index]}}</a></li>     
-            </ul> -->
-			<ul class="nav navbar-nav navbar-right">
-				<p class="navbar-text">Welcome {{navbarData.user}}</p>
-				<li><a href="/customer/logout">Logout</a></li>
-				<li><a href="#/login">Sign In</a></li>
-				<p class="navbar-text">Or</p>
-				<li><a href="#/createaccount">Register</a></li>
-        		<li><a href="#/account">My Account</a></li>
+        <div id="navbar" class="navbar-collapse collapse">            
+			<ul class="nav navbar-nav navbar-right">				
+				<p ng-if="navbarData.user" class="navbar-text">Welcome {{navbarData.user.firstName}} {{navbarData.user.lastName}}</p>
+				<li ng-if="navbarData.user"><a href="/customer/logout">Logout</a></li>								
+				<li  ng-if="!navbarData.user"><a href="#/login">Sign In</a></li>
+				<p  ng-if="!navbarData.user" class="navbar-text">Or</p>
+				<li  ng-if="!navbarData.user"><a href="#/createaccount">Register</a></li>				
+				<li><a href="#/account">My Account</a></li>
 			</ul>
         </div>
     </div>

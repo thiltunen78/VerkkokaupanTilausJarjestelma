@@ -17,9 +17,7 @@ exports.registerCustomer = function(req,res)
         	else
             	res.status(200).send({status:"Register successful"});        
     	});
-    });   
-	
-    
+    });       
 }
 
 exports.signInCustomer = function(req,res)
@@ -47,8 +45,9 @@ exports.getCurrentCustomerData = function(req,res)
     {  
         if(err)
             res.status(500).send({status:err.message});   
-        else
-            res.send(data);                     
+        else{			
+            res.send([data]);
+		}
     });
 }
 

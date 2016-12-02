@@ -5,7 +5,7 @@ var router = express.Router();
 		   
 router.post('/signincustomer',function(req,res)
 {
-    queries.loginCustomer(req,res);
+    queries.signInCustomer(req,res);
 });
 
 router.post('/registercustomer',function(req,res)
@@ -31,11 +31,6 @@ router.get('/isLogged',function(req,res)
         res.status(200).send([{status:'ok'}]);    
     else
         res.status(401).send([{status:'unauthorized'}]);
-});
-
-router.get('/signedincustomer',function(req,res)
-{
-	res.status(200).send([req.session.customerEmail]);     
 });
 		   
 module.exports = router;

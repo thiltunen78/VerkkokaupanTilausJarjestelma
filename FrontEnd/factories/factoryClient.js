@@ -2,21 +2,29 @@ main_module.factory('factoryClient',function($resource)
 {    
     var factory = {};
 	
-	factory.signedInUser = "";
+	factory.signedInUser = null;	
 					
 	factory.getSignedInUser = function(setNavBarData)
 	{
-		if(factory.signedInUser.length === 0)
+		if(!factory.signedInUser)
 		{
-			var resource = $resource('/customer/signedincustomer',{},{'get':{method:'GET'}});
+			var resource = $resource('/customer/isLogged',{},{'get':{method:'GET'}});
             resource.query().$promise.then(function(data)
-			{                
-            	factory.signedInUser = data[0];
-              	setNavBarData(factory.signedInUser);    
-                
+			{					
+				var resource2 = $resource('/customer/getcurrentcustomerdata',{},{'get':{method:'GET'}});
+            	resource2.query().$promise.then(function(data)
+				{
+                	factory.signedInUser = data[0];
+					setNavBarData(factory.signedInUser);
+					
+            	},function(error)
+				{				
+                	factory.signedInUser = null;
+                	setNavBarData(factory.signedInUser);
+            	});                
             },function(error)
-			{                
-                factory.signedInUser = "";
+			{				
+                factory.signedInUser = null;
                 setNavBarData(factory.signedInUser);
             });
 		}
@@ -24,7 +32,7 @@ main_module.factory('factoryClient',function($resource)
 		{
 			setNavBarData(factory.signedInUser);
 		}
-	}
+	}	
         
     factory.signIn = function(data)
     {		
