@@ -35,6 +35,7 @@ app.use('/FrontEnd/controllers',express.static(path.join(__dirname,'/FrontEnd/co
 app.use('/FrontEnd/factories',express.static(path.join(__dirname,'/FrontEnd/factories')));
 app.use('/FrontEnd/fonts',express.static(path.join(__dirname, '/FrontEnd/fonts')));
 app.use('/FrontEnd/directives',express.static(path.join(__dirname, '/FrontEnd/directives')));
+app.use('/FrontEnd/images',express.static(path.join(__dirname, '/FrontEnd/images')));
 //======================OUR REST API MIDDLEWARES===============================
 app.use('/customer',customer);
 app.use('/order',order);

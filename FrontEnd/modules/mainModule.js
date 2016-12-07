@@ -18,8 +18,8 @@ function loginRequired($q,$resource,$location)
         //mark the promise to be failed
         deferred.reject();
         
-        //go back to root context
-        $location.path('/');
+        //go to sign in page
+        $location.path('/login');
         
         return deferred;    
     });    
@@ -43,7 +43,7 @@ function adminLoginRequired($q,$resource,$location)
         //mark the promise to be failed
         deferred.reject();
         
-        //go back to admin sign in page
+        //go to admin sign in page
         $location.path('/admin');
         
         return deferred;    

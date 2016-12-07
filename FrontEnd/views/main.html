@@ -4,11 +4,33 @@
 
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-sm-4">			
+		<div class="col-sm-3">					
+			<ul class="nav nav-pills nav-stacked">
+				<li role="presentation"><a href="#/">Home</a></li>
+				<li class="genre-sub-item" id="vinyl" role="presentation" ng-click="showProductsFromGenre($event)"><a href="">Vinyl Records</a></li>
+  				<li class="genre-sub-sub-item" id="vinylRock" role="presentation" ng-click="showProductsFromGenre($event)"><a href="">Rock</a></li>
+  				<li class="genre-sub-sub-item" id="vinylPop" role="presentation" ng-click="showProductsFromGenre($event)"><a href="">Pop</a></li>
+  				<li class="genre-sub-sub-item" id="vinylHeavy" role="presentation" ng-click="showProductsFromGenre($event)"><a href="">Heavy</a></li>
+				<li class="genre-sub-sub-item" id="vinylElectronic" role="presentation" ng-click="showProductsFromGenre($event)"><a href="">Electronic</a></li>
+				<li class="genre-sub-item" id="cd" role="presentation" ng-click="showProductsFromGenre($event)"><a href="">Compact Discs</a></li>
+  				<li class="genre-sub-sub-item" id="cdRock" role="presentation" ng-click="showProductsFromGenre($event)"><a href="">Rock</a></li>
+  				<li class="genre-sub-sub-item" id="cdPop" role="presentation" ng-click="showProductsFromGenre($event)"><a href="">Pop</a></li>
+  				<li class="genre-sub-sub-item" id="cdHeavy" role="presentation" ng-click="showProductsFromGenre($event)"><a href="">Heavy</a></li>
+				<li class="genre-sub-sub-item" id="cdElectronic" role="presentation" ng-click="showProductsFromGenre($event)"><a href="">Electronic</a></li>
+			</ul>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-sm-4">
-		</div>
-	</div>
+		<div class="col-sm-9">
+			<ol class="breadcrumb">
+  				<li><a href="#/">Home</a></li>
+				
+				<li ng-repeat="data in breadcrumbData.ids" id="{{breadcrumbData.ids[$index]}}" ng-click="showProductsFromGenre($event)">
+					<a href="">{{breadcrumbData.texts[$index]}}</a>
+				</li>
+				
+  				<!--<li><a href="">Library</a></li>
+  				<li class="active">Data</li>-->
+			</ol>
+		</div>	
+	</div>	
 </div>
+
