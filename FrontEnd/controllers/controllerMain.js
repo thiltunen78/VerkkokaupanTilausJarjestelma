@@ -1,7 +1,10 @@
 main_module.controller('controllerMain',function($scope,factoryClient){
 	
-	$scope.breadcrumbData = null;
-	
+	$scope.breadcrumbData = {		
+				ids:['home'],
+				texts:['Home']
+				}				
+		
 	factoryClient.getSignedInUser(function setNavBarData(signedInUser)
     {		
 		$scope.navbarData = {			
@@ -16,64 +19,69 @@ main_module.controller('controllerMain',function($scope,factoryClient){
 		switch(event.currentTarget.id) {
     		case 'vinyl':
         		$scope.breadcrumbData = {		
-				ids:['vinyl'],
-				texts:['Vinyl Records']        	
+				ids:['home','vinyl'],
+				texts:['Home','Vinyl Records']
 				}
         		break;
     		case 'vinylRock':
 				$scope.breadcrumbData = {		
-				ids:['vinyl','vinylRock'],
-				texts:['Vinyl Records','Rock']        	
+				ids:['home','vinyl','vinylRock'],
+				texts:['Home','Vinyl Records','Rock']
 				}        		
         		break;
 			case 'vinylPop':
         		$scope.breadcrumbData = {		
-				ids:['vinyl','vinylPop'],
-				texts:['Vinyl Records','Pop']        	
+				ids:['home','vinyl','vinylPop'],
+				texts:['Home','Vinyl Records','Pop']
 				}
         		break;   
 			case 'vinylElectronic':
         		$scope.breadcrumbData = {		
-				ids:['vinyl','vinylElectronic'],
-				texts:['Vinyl Records','Electronic']        	
+				ids:['home','vinyl','vinylElectronic'],
+				texts:['Home','Vinyl Records','Electronic']
 				}
         		break;   
 			case 'vinylHeavy':
         		$scope.breadcrumbData = {		
-				ids:['vinyl','vinylHeavy'],
-				texts:['Vinyl Records','Heavy']        	
+				ids:['home','vinyl','vinylHeavy'],
+				texts:['Home','Vinyl Records','Heavy']
 				}
         		break;   
 			case 'cd':
         		$scope.breadcrumbData = {		
-				ids:['cd'],
-				texts:['Compact Discs']        	
+				ids:['home','cd'],
+				texts:['Home','Compact Discs']
 				}
         		break;
     		case 'cdRock':
         		$scope.breadcrumbData = {		
-				ids:['cd','cdRock'],
-				texts:['Compact Discs','Rock']        	
+				ids:['home','cd','cdRock'],
+				texts:['Home','Compact Discs','Rock']
 				}
         		break;
 			case 'cdPop':
         		$scope.breadcrumbData = {		
-				ids:['cd','cdPop'],
-				texts:['Compact Discs','Pop']        	
+				ids:['home','cd','cdPop'],
+				texts:['Home','Compact Discs','Pop']
 				}
         		break;   
 			case 'cdElectronic':
         		$scope.breadcrumbData = {		
-				ids:['cd','cdElectronic'],
-				texts:['Compact Discs','Electronic']        	
+				ids:['home','cd','cdElectronic'],
+				texts:['Home','Compact Discs','Electronic']
 				}
         		break;   
 			case 'cdHeavy':
         		$scope.breadcrumbData = {		
-				ids:['cd','cdHeavy'],
-				texts:['Compact Discs','Heavy']        	
+				ids:['home','cd','cdHeavy'],
+				texts:['Home','Compact Discs','Heavy']
 				}
         		break;   
+			default:
+				$scope.breadcrumbData = {		
+				ids:['home'],
+				texts:['Home']
+				}				
 		}
     }
 });

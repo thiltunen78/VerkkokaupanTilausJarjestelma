@@ -10,8 +10,8 @@
 			<h4 class="navbar-text">Record Store Z Administrator</h4>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav" ng-repeat="data in navbarData.urls">
-				<li class="{{navbarData.classes[$index]}}"><a href="{{navbarData.urls[$index]}}">{{navbarData.texts[$index]}}</a></li>     
+            <ul class="nav navbar-nav">
+				<li ng-repeat="data in navbarData.urls" class="{{navbarData.classes[$index]}}"><a href="{{navbarData.urls[$index]}}">{{navbarData.texts[$index]}}</a></li>     
             </ul> 
 			<ul class="nav navbar-nav navbar-right">
 				<p class="navbar-text">Signed in as {{navbarData.user}}</p>

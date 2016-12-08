@@ -6,7 +6,7 @@
 	<div class="row">
 		<div class="col-sm-3">					
 			<ul class="nav nav-pills nav-stacked">
-				<li role="presentation"><a href="#/">Home</a></li>
+				<li role="presentation" id="home" ng-click="showProductsFromGenre($event)"><a href="">Home</a></li>
 				<li class="genre-sub-item" id="vinyl" role="presentation" ng-click="showProductsFromGenre($event)"><a href="">Vinyl Records</a></li>
   				<li class="genre-sub-sub-item" id="vinylRock" role="presentation" ng-click="showProductsFromGenre($event)"><a href="">Rock</a></li>
   				<li class="genre-sub-sub-item" id="vinylPop" role="presentation" ng-click="showProductsFromGenre($event)"><a href="">Pop</a></li>
@@ -20,15 +20,10 @@
 			</ul>
 		</div>
 		<div class="col-sm-9">
-			<ol class="breadcrumb">
-  				<li><a href="#/">Home</a></li>
-				
+			<ol class="breadcrumb">			
 				<li ng-repeat="data in breadcrumbData.ids" id="{{breadcrumbData.ids[$index]}}" ng-click="showProductsFromGenre($event)">
-					<a href="">{{breadcrumbData.texts[$index]}}</a>
-				</li>
-				
-  				<!--<li><a href="">Library</a></li>
-  				<li class="active">Data</li>-->
+					<a href="">{{breadcrumbData.texts[$index]}}</a>				
+				</li> 				
 			</ol>
 		</div>	
 	</div>	
