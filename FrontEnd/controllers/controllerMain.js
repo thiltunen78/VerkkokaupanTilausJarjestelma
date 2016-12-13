@@ -3,8 +3,18 @@ main_module.controller('controllerMain',function($scope,factoryClient){
 	$scope.breadcrumbData = {		
 				ids:['home'],
 				texts:['Home']
-				}				
-		
+				}		
+	
+	$scope.products = null;
+	
+	getAllProducts = function()
+	{
+		factoryClient.getAllProducts(function setAllProducts(dataArray)
+		{						
+			$scope.products = dataArray;		
+		});
+	}	
+	
 	factoryClient.getSignedInUser(function setNavBarData(signedInUser)
     {		
 		$scope.navbarData = {			
@@ -81,7 +91,10 @@ main_module.controller('controllerMain',function($scope,factoryClient){
 				$scope.breadcrumbData = {		
 				ids:['home'],
 				texts:['Home']
-				}				
+				}	
+				getAllProducts();				
 		}
     }
+	
+	getAllProducts();
 });

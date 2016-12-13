@@ -16,6 +16,8 @@ var app = express();
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 3000;
 var ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
+var data_dir = process.env.OPENSHIFT_DATA_DIR || './productimages/';
+
 //========================MIDDLEWARES========================================
 
 app.use(session({
@@ -36,6 +38,7 @@ app.use('/FrontEnd/factories',express.static(path.join(__dirname,'/FrontEnd/fact
 app.use('/FrontEnd/fonts',express.static(path.join(__dirname, '/FrontEnd/fonts')));
 app.use('/FrontEnd/directives',express.static(path.join(__dirname, '/FrontEnd/directives')));
 app.use('/FrontEnd/images',express.static(path.join(__dirname, '/FrontEnd/images')));
+app.use('/productimages',express.static(path.join(__dirname, data_dir)));
 //======================OUR REST API MIDDLEWARES===============================
 app.use('/customer',customer);
 app.use('/order',order);

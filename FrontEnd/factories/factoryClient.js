@@ -3,7 +3,52 @@ main_module.factory('factoryClient',function($resource)
     var factory = {};
 	
 	factory.signedInUser = null;	
-					
+	factory.allProductsArray = [];	
+	
+/*	factory.getProductsByGenre = function(setProducts)
+	{
+		if(factory.allProductsArray.length === 0)
+		{
+            var resource = $resource('/product/getallproducts',{},{'get':{method:'GET'}});
+            resource.query().$promise.then(function(data)
+			{                
+            	factory.allProductsArray = data;
+              	setAllProducts(factory.allProductsArray);    
+                
+            },function(error)
+			{                
+                factory.allProductsArray = [];
+                setAllProducts(factory.allProductsArray);
+            });
+        }
+        else
+		{            
+            setAllProducts(factory.allProductsArray);
+        }	
+	}*/
+		
+	factory.getAllProducts = function(setAllProducts)
+	{
+		if(factory.allProductsArray.length === 0)
+		{
+            var resource = $resource('/product/getallproducts',{},{'get':{method:'GET'}});
+            resource.query().$promise.then(function(data)
+			{                
+            	factory.allProductsArray = data;
+              	setAllProducts(factory.allProductsArray);    
+                
+            },function(error)
+			{                
+                factory.allProductsArray = [];
+                setAllProducts(factory.allProductsArray);
+            });
+        }
+        else
+		{            
+            setAllProducts(factory.allProductsArray);
+        }	
+	}	
+	
 	factory.getSignedInUser = function(setNavBarData)
 	{
 		if(!factory.signedInUser)

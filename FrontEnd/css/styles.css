@@ -13,3 +13,12 @@
 .genre-sub-sub-item{
 	padding: 0px 40px;
 }
+
+.panel-style{
+	background-color: #403f3f;
+    border-radius: 4px;
+}
+
+.navbar-brand-overwrite {   
+    padding: 5px 15px;   
+}
