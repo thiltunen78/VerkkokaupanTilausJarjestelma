@@ -3,31 +3,25 @@ main_module.factory('factoryClient',function($resource)
     var factory = {};
 	
 	factory.signedInUser = null;	
+	factory.productsArray = [];
 	factory.allProductsArray = [];	
 	
-/*	factory.getProductsByGenre = function(setProducts)
-	{
-		if(factory.allProductsArray.length === 0)
-		{
-            var resource = $resource('/product/getallproducts',{},{'get':{method:'GET'}});
-            resource.query().$promise.then(function(data)
-			{                
-            	factory.allProductsArray = data;
-              	setAllProducts(factory.allProductsArray);    
-                
-            },function(error)
-			{                
-                factory.allProductsArray = [];
-                setAllProducts(factory.allProductsArray);
-            });
-        }
-        else
-		{            
-            setAllProducts(factory.allProductsArray);
-        }	
-	}*/
+	factory.getProductsByGenreAndType = function(searchParams, setProducts)
+	{		
+		var resource = $resource('/product/getproductsbygenreandtype',{},{'get':{method:'GET'}});
+		resource.query(searchParams).$promise.then(function(data)
+		{                
+			factory.productsArray = data;
+			setProducts(factory.productsArray);    
+
+		},function(error)
+		{                
+			factory.allProductsArray = [];
+			setProducts(factory.allProductsArray);
+		});        
+	}
 		
-	factory.getAllProducts = function(setAllProducts)
+	factory.getAllProducts = function(setProducts)
 	{
 		if(factory.allProductsArray.length === 0)
 		{
@@ -35,17 +29,17 @@ main_module.factory('factoryClient',function($resource)
             resource.query().$promise.then(function(data)
 			{                
             	factory.allProductsArray = data;
-              	setAllProducts(factory.allProductsArray);    
+              	setProducts(factory.allProductsArray);    
                 
             },function(error)
 			{                
                 factory.allProductsArray = [];
-                setAllProducts(factory.allProductsArray);
+                setProducts(factory.allProductsArray);
             });
         }
         else
 		{            
-            setAllProducts(factory.allProductsArray);
+            setProducts(factory.allProductsArray);
         }	
 	}	
 	

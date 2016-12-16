@@ -1,0 +1,16 @@
+<div>
+	<th-navbar navbar-data='navbarData'></th-navbar>
+</div>
+
+<div class="container-fluid">
+	<div class="row">		
+		<div class="col-sm-12">
+			<ol class="breadcrumb panel-style">			
+				<li ng-repeat="data in breadcrumbData.ids" id="{{breadcrumbData.ids[$index]}}" ng-click="showProductsFromGenre($event)">
+					<a href="">{{breadcrumbData.texts[$index]}}</a>				
+				</li> 				
+			</ol>				
+		</div>	
+	</div>	
+</div>
+

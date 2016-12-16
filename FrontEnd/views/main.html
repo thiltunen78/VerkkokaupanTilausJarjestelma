@@ -6,35 +6,36 @@
 	<div class="row">
 		<div class="col-sm-3">					
 			<ul class="nav nav-pills nav-stacked panel-style">
-				<li role="presentation" id="home" ng-click="showProductsFromGenre($event)"><a href="">Home</a></li>
-				<li class="genre-sub-item" id="vinyl" role="presentation" ng-click="showProductsFromGenre($event)"><a href="">Vinyl Records</a></li>
-  				<li class="genre-sub-sub-item" id="vinylRock" role="presentation" ng-click="showProductsFromGenre($event)"><a href="">Rock</a></li>
-  				<li class="genre-sub-sub-item" id="vinylPop" role="presentation" ng-click="showProductsFromGenre($event)"><a href="">Pop</a></li>
-  				<li class="genre-sub-sub-item" id="vinylHeavy" role="presentation" ng-click="showProductsFromGenre($event)"><a href="">Heavy</a></li>
-				<li class="genre-sub-sub-item" id="vinylElectronic" role="presentation" ng-click="showProductsFromGenre($event)"><a href="">Electronic</a></li>
-				<li class="genre-sub-item" id="cd" role="presentation" ng-click="showProductsFromGenre($event)"><a href="">Compact Discs</a></li>
-  				<li class="genre-sub-sub-item" id="cdRock" role="presentation" ng-click="showProductsFromGenre($event)"><a href="">Rock</a></li>
-  				<li class="genre-sub-sub-item" id="cdPop" role="presentation" ng-click="showProductsFromGenre($event)"><a href="">Pop</a></li>
-  				<li class="genre-sub-sub-item" id="cdHeavy" role="presentation" ng-click="showProductsFromGenre($event)"><a href="">Heavy</a></li>
-				<li class="genre-sub-sub-item" id="cdElectronic" role="presentation" ng-click="showProductsFromGenre($event)"><a href="">Electronic</a></li>
+				<li role="presentation" id="home" ng-click="showProductsFromGenre($event)"><a class="link-style" href="">Home</a></li>
+				<li class="genre-sub-item" id="vinyl" role="presentation" ng-click="showProductsFromGenre($event)"><a class="link-style" href="">Vinyl Records</a></li>
+  				<li class="genre-sub-sub-item" id="vinylRock" role="presentation" ng-click="showProductsFromGenre($event)"><a class="link-style" href="">Rock</a></li>
+  				<li class="genre-sub-sub-item" id="vinylPop" role="presentation" ng-click="showProductsFromGenre($event)"><a class="link-style" href="">Pop</a></li>
+  				<li class="genre-sub-sub-item" id="vinylHeavy" role="presentation" ng-click="showProductsFromGenre($event)"><a class="link-style" href="">Heavy</a></li>
+				<li class="genre-sub-sub-item" id="vinylElectronic" role="presentation" ng-click="showProductsFromGenre($event)"><a class="link-style" href="">Electronic</a></li>
+				<li class="genre-sub-item" id="cd" role="presentation" ng-click="showProductsFromGenre($event)"><a class="link-style" href="">Compact Discs</a></li>
+  				<li class="genre-sub-sub-item" id="cdRock" role="presentation" ng-click="showProductsFromGenre($event)"><a class="link-style" href="">Rock</a></li>
+  				<li class="genre-sub-sub-item" id="cdPop" role="presentation" ng-click="showProductsFromGenre($event)"><a class="link-style" href="">Pop</a></li>
+  				<li class="genre-sub-sub-item" id="cdHeavy" role="presentation" ng-click="showProductsFromGenre($event)"><a class="link-style" href="">Heavy</a></li>
+				<li class="genre-sub-sub-item" id="cdElectronic" role="presentation" ng-click="showProductsFromGenre($event)"><a class="link-style" href="">Electronic</a></li>
 			</ul>
 		</div>
 		<div class="col-sm-9">
 			<ol class="breadcrumb panel-style">			
 				<li ng-repeat="data in breadcrumbData.ids" id="{{breadcrumbData.ids[$index]}}" ng-click="showProductsFromGenre($event)">
-					<a href="">{{breadcrumbData.texts[$index]}}</a>				
+					<a class="link-style" href="">{{breadcrumbData.texts[$index]}}</a>				
 				</li> 				
 			</ol>
 			<div class="row" style="display:flex; flex-wrap: wrap;">				
-				<div ng-repeat="product in products" class="col-sm-4 col-md-3">
-					<div class="thumbnail">
+				<div ng-repeat="product in products" class="col-sm-3 col-md-2">
+					<div class="thumbnail thumbnail-overwrite">
+						<a href="#/product/" class="">
 				  		<img src="/productimages/{{product.imageFileName}}" alt="No Image">
-				  		<div class="caption">
-							<h4>{{product.artist}} - {{product.album}}</h4>
-							<p>{{product.mediaType}}, {{product.genre}}</p>
-							<h4>{{product.price}}€</h4>
-				<!--<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>-->
+				  		<div class="thumbnail-caption-overwrite">
+							<h5>{{product.artist}} - {{product.album}}</h5>
+							<h6>{{product.mediaType}}, {{product.genre}}</h6>
+							<h6>{{product.price}}€</h6>				
 				  		</div>
+						</a>
 					</div>
 			  	</div>						
 			</div>			

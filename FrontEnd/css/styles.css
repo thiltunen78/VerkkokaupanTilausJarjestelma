@@ -6,6 +6,23 @@
     left: 450px;    
 }
 
+.text-style{
+	color: #4cab9f;
+}
+
+.link-style{
+	color:#ffffff;
+}
+
+.background-style{
+	background-color: #bfe2da;
+}
+
+.panel-style{
+	background-color: #609085;
+    border-radius: 4px;
+}
+
 .genre-sub-item{
 	padding: 0px 20px;
 }
@@ -14,11 +31,20 @@
 	padding: 0px 40px;
 }
 
-.panel-style{
-	background-color: #403f3f;
-    border-radius: 4px;
-}
-
 .navbar-brand-overwrite {   
     padding: 5px 15px;   
+}
+
+.thumbnail-overwrite{
+	background-color: rgba(255, 255, 255, 0);
+    border: 1px solid #609085;
+}
+
+.thumbnail-caption-overwrite {
+    padding: 0px;
+    color: #333;
+}
+
+.page-header-overwrite{
+	border-bottom: 1px solid #000000;
 }

@@ -97,13 +97,26 @@ exports.getAllProducts = function(req,res)
 
 exports.getProductsByGenreAndType = function(req,res)
 {
-    var searchObject = {
-        genre:req.query.genre,
-        mediaType:req.query.mediaType
-    };
+	var searchObject = {};
+	
+	if(req.query.genre && req.query.mediaType){
+		searchObject = {
+        	genre:req.query.genre,
+        	mediaType:req.query.mediaType
+    	};
+	}
+	else if(req.query.genre){
+		searchObject = {
+        	genre:req.query.genre        	
+    	};
+	}
+	else if(req.query.mediaType){
+		searchObject = {        	
+        	mediaType:req.query.mediaType
+    	};
+	}    
     
-    database.Product.find(searchObject,function(err,data)
-    {    
+    database.Product.find(searchObject,function(err,data){    
         if(err)
             res.status(500).send({status:err.message});   
         else
