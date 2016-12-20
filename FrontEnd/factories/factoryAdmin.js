@@ -2,12 +2,12 @@ main_module.factory('factoryAdmin',function($resource)
 {    
     var factory = {};
 	
-	factory.signedInUser = "";
+	factory.signedInUser = null;
 	factory.allProductsArray = [];
 				
 	factory.getSignedInUser = function(setNavBarData)
 	{
-		if(factory.signedInUser.length === 0)
+		if(!factory.signedInUser)
 		{
 			var resource = $resource('/orderhandler/signedinorderhandler',{},{'get':{method:'GET'}});
             resource.query().$promise.then(function(data)
@@ -17,7 +17,7 @@ main_module.factory('factoryAdmin',function($resource)
                 
             },function(error)
 			{                
-                factory.signedInUser = "";
+                factory.signedInUser = "error";
                 setNavBarData(factory.signedInUser);
             });
 		}

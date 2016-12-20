@@ -49,6 +49,11 @@ main_module.controller('controllerAllProducts',function($scope,factoryAdmin,$loc
                 forRemove:removeArray
             }
             
+			if($scope.navbarData.user != "admin"){
+				Flash.create('warning', 'Only user "admin" can remove products from the system!', 'custom-class');
+				return;
+			}
+			
             factoryAdmin.removeProducts(data).then(function(data)
 			{
             	factoryAdmin.getAllProducts(function setAllProducts(dataArray)
