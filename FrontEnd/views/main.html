@@ -6,39 +6,56 @@
 	<div class="row">
 		<div class="col-sm-3">					
 			<ul class="nav nav-pills nav-stacked panel-style">
-				<li role="presentation" id="home" ng-click="showProductsFromGenre($event)"><a class="link-style" href="">Home</a></li>
-				<li class="genre-sub-item" id="vinyl" role="presentation" ng-click="showProductsFromGenre($event)"><a class="link-style" href="">Vinyl Records</a></li>
-  				<li class="genre-sub-sub-item" id="vinylRock" role="presentation" ng-click="showProductsFromGenre($event)"><a class="link-style" href="">Rock</a></li>
-  				<li class="genre-sub-sub-item" id="vinylPop" role="presentation" ng-click="showProductsFromGenre($event)"><a class="link-style" href="">Pop</a></li>
-  				<li class="genre-sub-sub-item" id="vinylHeavy" role="presentation" ng-click="showProductsFromGenre($event)"><a class="link-style" href="">Heavy</a></li>
-				<li class="genre-sub-sub-item" id="vinylElectronic" role="presentation" ng-click="showProductsFromGenre($event)"><a class="link-style" href="">Electronic</a></li>
-				<li class="genre-sub-item" id="cd" role="presentation" ng-click="showProductsFromGenre($event)"><a class="link-style" href="">Compact Discs</a></li>
-  				<li class="genre-sub-sub-item" id="cdRock" role="presentation" ng-click="showProductsFromGenre($event)"><a class="link-style" href="">Rock</a></li>
-  				<li class="genre-sub-sub-item" id="cdPop" role="presentation" ng-click="showProductsFromGenre($event)"><a class="link-style" href="">Pop</a></li>
-  				<li class="genre-sub-sub-item" id="cdHeavy" role="presentation" ng-click="showProductsFromGenre($event)"><a class="link-style" href="">Heavy</a></li>
-				<li class="genre-sub-sub-item" id="cdElectronic" role="presentation" ng-click="showProductsFromGenre($event)"><a class="link-style" href="">Electronic</a></li>
+				<li role="presentation" id="home" ng-click="showProductsFromGenre($event,1)"><a class="link-style" href="">Home</a></li>
+				<li class="genre-sub-item" id="vinyl" role="presentation" ng-click="showProductsFromGenre($event,1)"><a class="link-style" href="">Vinyl Records</a></li>
+  				<li class="genre-sub-sub-item" id="vinylRock" role="presentation" ng-click="showProductsFromGenre($event,1)"><a class="link-style" href="">Rock</a></li>
+  				<li class="genre-sub-sub-item" id="vinylPop" role="presentation" ng-click="showProductsFromGenre($event,1)"><a class="link-style" href="">Pop</a></li>
+  				<li class="genre-sub-sub-item" id="vinylHeavy" role="presentation" ng-click="showProductsFromGenre($event,1)"><a class="link-style" href="">Heavy</a></li>
+				<li class="genre-sub-sub-item" id="vinylElectronic" role="presentation" ng-click="showProductsFromGenre($event,1)"><a class="link-style" href="">Electronic</a></li>
+				<li class="genre-sub-item" id="cd" role="presentation" ng-click="showProductsFromGenre($event,1)"><a class="link-style" href="">Compact Discs</a></li>
+  				<li class="genre-sub-sub-item" id="cdRock" role="presentation" ng-click="showProductsFromGenre($event,1)"><a class="link-style" href="">Rock</a></li>
+  				<li class="genre-sub-sub-item" id="cdPop" role="presentation" ng-click="showProductsFromGenre($event,1)"><a class="link-style" href="">Pop</a></li>
+  				<li class="genre-sub-sub-item" id="cdHeavy" role="presentation" ng-click="showProductsFromGenre($event,1)"><a class="link-style" href="">Heavy</a></li>
+				<li class="genre-sub-sub-item" id="cdElectronic" role="presentation" ng-click="showProductsFromGenre($event,1)"><a class="link-style" href="">Electronic</a></li>
 			</ul>
+			</br>
 		</div>
 		<div class="col-sm-9">
 			<ol class="breadcrumb panel-style">			
-				<li ng-repeat="data in breadcrumbData.ids" id="{{breadcrumbData.ids[$index]}}" ng-click="showProductsFromGenre($event)">
+				<li ng-repeat="data in breadcrumbData.ids" id="{{breadcrumbData.ids[$index]}}" ng-click="showProductsFromGenre($event,1)">
 					<a class="link-style" href="">{{breadcrumbData.texts[$index]}}</a>				
 				</li> 				
 			</ol>
 			<div class="row" style="display:flex; flex-wrap: wrap;">				
-				<div ng-repeat="product in products" class="col-sm-3 col-md-2">
+				<div ng-repeat="product in products" class="col-xs-4 col-sm-3 col-md-2">
 					<div class="thumbnail thumbnail-overwrite">
 						<a href="#/product/" class="">
 				  		<img src="/productimages/{{product.imageFileName}}" alt="No Image">
 				  		<div class="thumbnail-caption-overwrite">
 							<h5>{{product.artist}} - {{product.album}}</h5>
-							<h6>{{product.mediaType}}, {{product.genre}}</h6>
-							<h6>{{product.price}}€</h6>				
+							<h6>{{product.mediaTypeShort}}, {{product.genre}}, {{product.price}}€</h6>										
 				  		</div>
 						</a>
 					</div>
 			  	</div>						
-			</div>			
+			</div>	
+			<nav aria-label="Page navigation">
+  				<ul class="pagination">
+    				<li>
+      					<a href="" aria-label="Previous">
+        					<span aria-hidden="true">&laquo;</span>
+      					</a>
+    				</li>					
+					<li ng-repeat="page in pageCount" ng-click="showProductsFromGenre($event,page.nr)" class="{{page.class}}">
+						<a href="">{{page.nr}}</a>
+					</li>					
+					<li>
+					  	<a href="" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+					  	</a>
+					</li>
+  				</ul>
+			</nav>
 		</div>	
 	</div>
 	<div class="row">

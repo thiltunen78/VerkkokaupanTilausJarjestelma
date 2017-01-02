@@ -2,45 +2,19 @@ main_module.factory('factoryClient',function($resource)
 {    
     var factory = {};
 	
-	factory.signedInUser = null;	
-	factory.productsArray = [];
-	factory.allProductsArray = [];	
+	factory.signedInUser = null;		
 	
-	factory.getProductsByGenreAndType = function(searchParams, setProducts)
+	factory.getProducts = function(searchParams, setProducts)
 	{		
-		var resource = $resource('/product/getproductsbygenreandtype',{},{'get':{method:'GET'}});
-		resource.query(searchParams).$promise.then(function(data)
-		{                
-			factory.productsArray = data;
-			setProducts(factory.productsArray);    
+		var resource = $resource('/product/getproducts',{},{'get':{method:'GET'}});
+		resource.get(searchParams).$promise.then(function(data)
+		{			
+			setProducts(data.docs, data.pages);    
 
 		},function(error)
-		{                
-			factory.allProductsArray = [];
-			setProducts(factory.allProductsArray);
+		{			
+			setProducts([],0);
 		});        
-	}
-		
-	factory.getAllProducts = function(setProducts)
-	{
-		if(factory.allProductsArray.length === 0)
-		{
-            var resource = $resource('/product/getallproducts',{},{'get':{method:'GET'}});
-            resource.query().$promise.then(function(data)
-			{                
-            	factory.allProductsArray = data;
-              	setProducts(factory.allProductsArray);    
-                
-            },function(error)
-			{                
-                factory.allProductsArray = [];
-                setProducts(factory.allProductsArray);
-            });
-        }
-        else
-		{            
-            setProducts(factory.allProductsArray);
-        }	
 	}	
 	
 	factory.getSignedInUser = function(setNavBarData)

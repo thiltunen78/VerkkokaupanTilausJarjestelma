@@ -6,25 +6,28 @@ main_module.factory('factoryAdmin',function($resource)
 	factory.allProductsArray = [];
 				
 	factory.getSignedInUser = function(setNavBarData)
-	{
+	{		    
 		if(!factory.signedInUser)
 		{
-			var resource = $resource('/orderhandler/signedinorderhandler',{},{'get':{method:'GET'}});
-            resource.query().$promise.then(function(data)
-			{                
-            	factory.signedInUser = data[0];
-              	setNavBarData(factory.signedInUser);    
-                
-            },function(error)
-			{                
-                factory.signedInUser = "error";
-                setNavBarData(factory.signedInUser);
-            });
+			$resource('/orderhandler/isLogged').query().$promise.then(function success()
+			{
+				var resource = $resource('/orderhandler/signedinorderhandler',{},{'get':{method:'GET'}});
+				resource.query().$promise.then(function(data)
+				{
+					factory.signedInUser = data[0];	
+					setNavBarData(factory.signedInUser);    
+
+				},function(error)
+				{                
+					factory.signedInUser = "error";
+					setNavBarData(factory.signedInUser);
+				});
+			});
 		}
 		else
-		{
+		{			
 			setNavBarData(factory.signedInUser);
-		}
+		}    	  		
 	}
         
     factory.signIn = function(data)
@@ -51,7 +54,7 @@ main_module.factory('factoryAdmin',function($resource)
 	{
 		if(factory.allProductsArray.length === 0)
 		{
-            var resource = $resource('/product/getallproducts',{},{'get':{method:'GET'}});
+            var resource = $resource('/product/getproducts',{},{'get':{method:'GET'}});
             resource.query().$promise.then(function(data)
 			{                
             	factory.allProductsArray = data;
@@ -75,8 +78,7 @@ main_module.factory('factoryAdmin',function($resource)
 		
         var resource = $resource('/product/removeproduct',{},{'delete':{method:'DELETE'}});
         return resource.delete(data).$promise;
-    }
-	
+    }	
         
     return factory;
 });

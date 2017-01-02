@@ -84,20 +84,14 @@ exports.signInOrderHandler = function(req,res)
     });
 }
 
-exports.getAllProducts = function(req,res)
-{    
-    database.Product.find(function(err,data)
-    {        
-        if(err)
-            res.status(500).send({status:err.message});
-        else
-            res.send(data);                   
-    });
-}
-
-exports.getProductsByGenreAndType = function(req,res)
+exports.getProducts = function(req,res)
 {
 	var searchObject = {};
+	var pagenr = 0;
+	
+	if(req.query.page){
+		pagenr = req.query.page;
+	}
 	
 	if(req.query.genre && req.query.mediaType){
 		searchObject = {
@@ -115,18 +109,36 @@ exports.getProductsByGenreAndType = function(req,res)
         	mediaType:req.query.mediaType
     	};
 	}    
-    
-    database.Product.find(searchObject,function(err,data){    
+  	
+	if(pagenr > 0){	
+		database.Product.paginate(searchObject, { page: pagenr, limit: 10 }, function(err, result) {
+  			if(err)
+            	res.status(500).send({status:err.message});   
+        	else			            
+				res.send(result);			
+		});
+	}
+	else{
+		database.Product.find(searchObject,function(err,result){    
         if(err)
             res.status(500).send({status:err.message});   
         else
-            res.send(data);                 
-    });
+            res.send(result);                 
+    	});
+	}	
 }
 
 exports.addProduct = function(req,res)
 {        
     var productTemp = new database.Product(req.body);
+	
+	if(productTemp.mediaType == "Compact Disc"){
+		productTemp.mediaTypeShort = "CD";
+	}
+	else{
+		productTemp.mediaTypeShort = "Vinyl";
+	}
+	
     //Save it to database
     productTemp.save(function(err,newData)
     {
@@ -139,14 +151,14 @@ exports.addProduct = function(req,res)
 
 exports.removeProduct = function(req,res)
 {    
-    var toRemove = [];
+    var toRemoveIds = [];
     
-    if(req.query.forRemove instanceof Array)
-    	toRemove = req.query.forRemove;
+    if(req.query.forRemoveIds instanceof Array)
+    	toRemoveIds = req.query.forRemoveIds;
     else
-       	toRemove.push(req.query.forRemove); 
-        
-    database.Product.remove({_id:{$in:toRemove}},function(err,data)
+       	toRemoveIds.push(req.query.forRemoveIds); 
+        	
+    database.Product.remove({_id:{$in:toRemoveIds}},function(err,data)
     {        
         if(err)
             res.status(500).send({message:err.message});

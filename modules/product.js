@@ -1,6 +1,7 @@
 var express = require("express");
 var queries = require('./queries');
 var multer = require('multer');
+var fs = require('fs');
 
 var router = express.Router();
 var data_dir = process.env.OPENSHIFT_DATA_DIR || './productimages/';
@@ -22,9 +23,7 @@ var upload = multer(
     }).single('file');
    
 router.post('/uploadimage', function(req, res) 
-{
-	console.log("serverinpäässä");
-	
+{	
 	upload(req,res,function(err)
 	{
     	if(err)
@@ -39,14 +38,9 @@ router.post('/uploadimage', function(req, res)
     })       
 });
 
-router.get('/getallproducts',function(req,res)
-{
-    queries.getAllProducts(req,res);
-});
-
-router.get('/getproductsbygenreandtype', function(req,res)
+router.get('/getproducts', function(req,res)
 {    
-    queries.getProductsByGenreAndType(req,res);    
+    queries.getProducts(req,res);    
 });
 
 router.post('/addproduct',function(req,res)
@@ -55,7 +49,27 @@ router.post('/addproduct',function(req,res)
 });
 
 router.delete('/removeproduct',function(req,res)
-{    
+{
+	//remove product image files
+	var toRemoveFiles = [];
+	var file;
+	    
+    if(req.query.forRemoveFiles instanceof Array)
+    	toRemoveFiles = req.query.forRemoveFiles;
+    else
+       	toRemoveFiles.push(req.query.forRemoveFiles); 
+		
+	for(var i=0;i<toRemoveFiles.length;i++){	
+		
+		file = toRemoveFiles[i];			
+		
+		fs.exists(data_dir + file, function(exists) {
+  		if(exists) {				
+    		fs.unlink(data_dir + file);
+		}});
+	}	
+	
+	// remove entries from the database
     queries.removeProduct(req,res);
 });
 

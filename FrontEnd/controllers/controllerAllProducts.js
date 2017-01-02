@@ -1,6 +1,7 @@
 main_module.controller('controllerAllProducts',function($scope,factoryAdmin,$location,Flash){
 	
-	var removeArray = [];
+	var removeIdArray = [];
+	var removeFileArray = [];
 	
 	factoryAdmin.getSignedInUser(function setNavBarData(signedInUser)
     {	
@@ -14,39 +15,42 @@ main_module.controller('controllerAllProducts',function($scope,factoryAdmin,$loc
 	
 	factoryAdmin.getAllProducts(function setAllProducts(dataArray)
 	{
-		$scope.allProducts = dataArray;
-				
+		$scope.allProducts = dataArray;				
 		Sortable.init();
 	});
 	
-	$scope.addToRemove = function($event,$index,id)
-	{        
+	$scope.addToRemove = function($event,$index,id,file)
+	{       		
         //Check if item was selected
         if(event.target.checked)
 		{            
-            //Add the id to our remove array
-            removeArray.push(id);
+            //Add id to remove array
+            removeIdArray.push(id);
+			//Add image file name to remove array
+			if(file.length){
+            	removeFileArray.push(file);
+			}
         }
         else
 		{            
             //Remove if item was unchecked                        
-            removeArray.splice(removeArray.indexOf(id,0),1);            
-        }      
-		
-		console.log(removeArray);
+            removeIdArray.splice(removeIdArray.indexOf(id,0),1);
+			removeFileArray.splice(removeFileArray.indexOf(file,0),1);
+        }      	
     }    
   
     $scope.removeProducts = function()
 	{
         //Nothing to remove
-        if(removeArray.length === 0)
+        if(removeIdArray.length === 0)
 		{            
             Flash.create('warning', 'Nothing to remove!', 'custom-class');
         }
         else
 		{            
             var data = {                
-                forRemove:removeArray
+                forRemoveIds:removeIdArray,
+				forRemoveFiles:removeFileArray
             }
             
 			if($scope.navbarData.user != "admin"){
@@ -62,13 +66,15 @@ main_module.controller('controllerAllProducts',function($scope,factoryAdmin,$loc
 					Sortable.init();
 				}); 
 				
-				removeArray = [];
+				removeIdArray = [];
+				removeFileArray = [];
                 
             },function(error)
 			{                
                 Flash.create('warning', 'Error in server!', 'custom-class');
 				
-				removeArray = [];
+				removeIdArray = [];
+				removeFileArray = [];
             });
         }
     }

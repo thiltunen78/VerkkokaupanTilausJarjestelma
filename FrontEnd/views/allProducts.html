@@ -28,7 +28,7 @@
         		</thead>
         		<tbody>
             		<tr ng-repeat='product in allProducts'>
-						<td><input type="checkbox" ng-click='addToRemove($event,$index,product._id)'></td>
+						<td><input type="checkbox" ng-click='addToRemove($event,$index,product._id,product.imageFileName)'></td>
                 		<td>{{product.artist}}</td>
                 		<td>{{product.album}}</td>
                 		<td>{{product.mediaType}}</td>

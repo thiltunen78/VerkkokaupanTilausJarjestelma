@@ -30,9 +30,7 @@ main_module.controller('controllerAddNewProduct',function($scope,factoryAdmin,$l
 			description:$scope.textareaDescription,
 			imageFileName:"",
 			removed:false
-        }		
-		
-		console.log(product);
+        }			
 		
 		if((product.artist.length === 0) ||
 			(product.album.length === 0) ||
@@ -45,23 +43,17 @@ main_module.controller('controllerAddNewProduct',function($scope,factoryAdmin,$l
 			return;
 		}
 		
-		$('#buttonAdd').attr("disabled", true);
-		
-		console.log($scope.filee);
+		$('#buttonAdd').attr("disabled", true);		
 		
 		if($scope.filee)
-		{			
-			console.log("KUVA ON");
-			
+		{				
 			Upload.upload({
 					url: '/product/uploadimage', //webAPI exposed to upload the file
                 	data:{file:$scope.filee} //pass file as data, should be user ng-model
             	}).then(function (resp) { //upload function returns a promise
                 	if(resp.data.error_code === 0)
 					{ 
-						product.imageFileName = resp.data.file.filename;
-						
-						console.log(product);
+						product.imageFileName = resp.data.file.filename;						
 						
         				waitPromise = factoryAdmin.addProduct(product);
 						waitPromise.then(function(data)
@@ -96,18 +88,13 @@ main_module.controller('controllerAddNewProduct',function($scope,factoryAdmin,$l
             	}, 
 				function (evt) 
 				{               
-                	var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                	console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+                	var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);                	
                 	$scope.progress = 'progress: ' + progressPercentage + '% '; // capture upload progress
             	});
 		}
         
 		else
-		{	
-			console.log("KUVAA EI OO");
-			
-			console.log(product);
-			
+		{			
 			waitPromise = factoryAdmin.addProduct(product);
 
 			waitPromise.then(function(data)
