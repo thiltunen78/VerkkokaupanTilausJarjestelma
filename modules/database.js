@@ -48,19 +48,6 @@ var OrderHandler = mongoose.model('OrderHandler',{
     orders:[{type:mongoose.Schema.Types.ObjectId,ref:'Order'}] // table of order ids      
 });
 
-/*
-var Product = mongoose.model('Product',{    
-    artist:String,
-    album:String,
-    price:Number, // price is in cents (for example 123 == 1.23€)
-    description:String,
-    mediaType:String,
-	mediaTypeShort:String,
-    genre:String,
-	imageFileName:String,
-    removed:Boolean
-});*/
-
 var productSchema = new mongoose.Schema({    
     artist:String,
     album:String,

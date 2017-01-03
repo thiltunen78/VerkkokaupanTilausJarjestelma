@@ -10,7 +10,7 @@ main_module.controller('controllerMain',function($scope,factoryClient){
 	
 	$scope.currentGenre = "";
 	$scope.currentMediaType = "";
-	$scope.currentPage = 0;
+	$scope.currentPage = 1;
 		
 	getProducts = function(searchParams)
 	{
@@ -19,12 +19,12 @@ main_module.controller('controllerMain',function($scope,factoryClient){
 			$scope.products = productArray;	
 			
 			$scope.pageCount = [];
-			
+			// set page numbers and active states to array for pagination component
 			for(var i=0;i<pageCount;i++){
 				if($scope.currentPage == (i+1))
 					$scope.pageCount.push({nr:i+1,class:'active'});
 				else
-					$scope.pageCount.push({nr:i+1,class:'disabled'});
+					$scope.pageCount.push({nr:i+1,class:''});
 			};		
 		});
 	}	
@@ -38,6 +38,11 @@ main_module.controller('controllerMain',function($scope,factoryClient){
 	
 	$scope.showProductsFromGenre = function(event,pagenr)
 	{		
+		if(pagenr < 1)
+			pagenr = 1;
+		else if(pagenr > $scope.pageCount.length)
+			pagenr = $scope.pageCount.length;
+		
 		$scope.currentPage = pagenr;
 		
 		switch(event.currentTarget.id) {
@@ -140,7 +145,8 @@ main_module.controller('controllerMain',function($scope,factoryClient){
 				$scope.currentGenre = "Heavy";
 				$scope.currentMediaType = "Compact Disc";
         		break;   
-			default:				
+			default:	
+				// this is for pagination component page click
 				getProducts({page:pagenr,genre:$scope.currentGenre,mediaType:$scope.currentMediaType});				
 		}
     }
