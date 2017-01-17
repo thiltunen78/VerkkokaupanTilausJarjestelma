@@ -2,18 +2,27 @@ main_module.factory('factoryClient',function($resource)
 {    
     var factory = {};
 	
-	factory.signedInUser = null;		
+	factory.signedInUser = null;	
+	factory.pageCount = 1;
 	
 	factory.getProducts = function(searchParams, setProducts)
 	{		
 		var resource = $resource('/product/getproducts',{},{'get':{method:'GET'}});
 		resource.get(searchParams).$promise.then(function(data)
 		{			
+			if(data.pages == 0){
+				//use existing page count information
+				data.pages = factory.pageCount;
+			}										
+				
+			//store page count information
+			factory.pageCount = data.pages;			
+				
 			setProducts(data.docs, data.pages);    
 
 		},function(error)
 		{			
-			setProducts([],0);
+			setProducts([],1);
 		});        
 	}	
 	

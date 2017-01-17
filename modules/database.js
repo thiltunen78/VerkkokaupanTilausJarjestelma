@@ -1,5 +1,4 @@
 var mongoose = require("mongoose");
-var mongoosePaginate = require('mongoose-paginate');
 
 //configure mongodb
 var db_name = 'verkkokauppa';
@@ -48,20 +47,17 @@ var OrderHandler = mongoose.model('OrderHandler',{
     orders:[{type:mongoose.Schema.Types.ObjectId,ref:'Order'}] // table of order ids      
 });
 
-var productSchema = new mongoose.Schema({    
+var Product = mongoose.model('Product',{    
     artist:String,
     album:String,
-    price:Number, // price is in cents (for example 123 == 1.23€)
+    price:Number, 
     description:String,
     mediaType:String,
 	mediaTypeShort:String,
     genre:String,
 	imageFileName:String,
     removed:Boolean
-});
-
-productSchema.plugin(mongoosePaginate);
-var Product = mongoose.model('Product',  productSchema); 
+}); 
 
 exports.Customer = Customer;
 exports.Order = Order;

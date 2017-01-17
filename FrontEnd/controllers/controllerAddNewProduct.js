@@ -4,7 +4,7 @@ main_module.controller('controllerAddNewProduct',function($scope,factoryAdmin,$l
     $scope.inputAlbum = "";
 	$scope.selectMediaType = "Compact Disc";
 	$scope.selectGenre = "Rock";
-	$scope.inputPrice = "";	
+	$scope.inputPrice = 0;	
 	$scope.textareaDescription = "";
 	
 	var waitPromise = null;
@@ -36,8 +36,9 @@ main_module.controller('controllerAddNewProduct',function($scope,factoryAdmin,$l
 			(product.album.length === 0) ||
 			(product.mediaType.length === 0) ||
 			(product.genre.length === 0) ||
-			(product.price.length === 0) ||		
-			(product.description.length === 0))
+			(product.price <= 0) ||		
+			(product.description.length === 0) ||
+		  	(!$scope.filee))
 		{
 			Flash.create('warning', "Please fill all the fields!", 'custom-class');
 			return;
@@ -45,78 +46,49 @@ main_module.controller('controllerAddNewProduct',function($scope,factoryAdmin,$l
 		
 		$('#buttonAdd').attr("disabled", true);		
 		
-		if($scope.filee)
-		{				
-			Upload.upload({
-					url: '/product/uploadimage', //webAPI exposed to upload the file
-                	data:{file:$scope.filee} //pass file as data, should be user ng-model
-            	}).then(function (resp) { //upload function returns a promise
-                	if(resp.data.error_code === 0)
-					{ 
-						product.imageFileName = resp.data.file.filename;						
-						
-        				waitPromise = factoryAdmin.addProduct(product);
-						waitPromise.then(function(data)
-						{                                               
-							$scope.inputArtist = "";
-							$scope.inputAlbum = "";
-							$scope.selectMediaType = "Compact Disc";
-							$scope.selectGenre = "Rock";
-							$scope.inputPrice = "";
-							$scope.textareaDescription = "";
-							$scope.filee = "";
+		Upload.upload({
+				url: '/product/uploadimage', //webAPI exposed to upload the file
+				data:{file:$scope.filee} //pass file as data, should be user ng-model
+			}).then(function (resp) { //upload function returns a promise
+				if(resp.data.error_code === 0)
+				{ 
+					product.imageFileName = resp.data.file.filename;						
 
-							$('#buttonAdd').attr("disabled", false);
+					waitPromise = factoryAdmin.addProduct(product);
+					waitPromise.then(function(data)
+					{                                               
+						$scope.inputArtist = "";
+						$scope.inputAlbum = "";
+						$scope.selectMediaType = "Compact Disc";
+						$scope.selectGenre = "Rock";
+						$scope.inputPrice = 0;
+						$scope.textareaDescription = "";
+						$scope.filee = "";
 
-							Flash.create('success', "Product added succesfully", 'custom-class');
-						},
-						function error(data)
-						{        
-							$('#buttonAdd').attr("disabled", false);
+						$('#buttonAdd').attr("disabled", false);
 
-							Flash.create('danger', "Error adding product", 'custom-class');                
-						});
-                	} 
-					else 
-					{
-						Flash.create('danger', "Error uploading image", 'custom-class');                    
-                	}
-            	},
-				function (resp)
-				{ //catch error
-                	console.log('Error status: ' + resp.status);                
-            	}, 
-				function (evt) 
-				{               
-                	var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);                	
-                	$scope.progress = 'progress: ' + progressPercentage + '% '; // capture upload progress
-            	});
-		}
-        
-		else
-		{			
-			waitPromise = factoryAdmin.addProduct(product);
+						Flash.create('success', "Product added succesfully", 'custom-class');
+					},
+					function error(data)
+					{        
+						$('#buttonAdd').attr("disabled", false);
 
-			waitPromise.then(function(data)
-			{                                               
-				$scope.inputArtist = "";
-				$scope.inputAlbum = "";
-				$scope.selectMediaType = "Compact Disc";
-				$scope.selectGenre = "Rock";
-				$scope.inputPrice = "";
-				$scope.textareaDescription = "";
-				$scope.filee = "";
-
-				$('#buttonAdd').attr("disabled", false);
-
-				Flash.create('success', "Product added succesfully", 'custom-class');
+						Flash.create('danger', "Error adding product", 'custom-class');                
+					});
+				} 
+				else 
+				{
+					Flash.create('danger', "Error uploading image", 'custom-class');                    
+				}
 			},
-			function error(data)
-			{        
-				$('#buttonAdd').attr("disabled", false);
-
-				Flash.create('danger', "Error adding product", 'custom-class');                
-			});
-		}
+			function (resp)
+			{ //catch error
+				console.log('Error status: ' + resp.status);                
+			}, 
+			function (evt) 
+			{               
+				var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);                	
+				$scope.progress = 'progress: ' + progressPercentage + '% '; // capture upload progress
+			});        
     }   
 });

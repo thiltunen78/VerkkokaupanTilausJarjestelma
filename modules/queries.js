@@ -88,6 +88,7 @@ exports.getProducts = function(req,res)
 {
 	var searchObject = {};
 	var pagenr = 0;
+	var itemsPerPage = 12;
 	
 	if(req.query.page){
 		pagenr = req.query.page;
@@ -110,20 +111,51 @@ exports.getProducts = function(req,res)
     	};
 	}    
   	
-	if(pagenr > 0){	
-		database.Product.paginate(searchObject, { page: pagenr, limit: 10 }, function(err, result) {
-  			if(err)
-            	res.status(500).send({status:err.message});   
-        	else			            
-				res.send(result);			
-		});
+	if(pagenr > 0){	// for pagination	
+		if(pagenr == 1){ // get page count only once at page nr 1
+			database.Product.count(searchObject,function(err,count){    
+        		if(err){
+            		res.status(500).send({status:err.message});  
+				}
+        		else{
+					database.Product.find(searchObject).skip((pagenr-1)*itemsPerPage).limit(itemsPerPage).exec(function(err,result)
+					{					    
+        				if(err){
+							res.status(500).send({status:err.message});   
+						}
+        				else{		
+							// calculate page count from product count
+							var pages = count/itemsPerPage;
+							pages = Math.ceil(pages);								
+							if(pages == 0)
+								pages = 1;		
+							
+            				res.send({docs:result,pages:pages});
+						}
+    				});
+				}            	                 
+    		});
+		}
+		else{	
+			database.Product.find(searchObject).skip((pagenr-1)*itemsPerPage).limit(itemsPerPage).exec(function(err,result)
+			{					    
+				if(err){
+					res.status(500).send({status:err.message});   
+				}
+				else{
+					res.send({docs:result,pages:0}); // send pages 0 to indicate use of earlier page count
+				}
+			});
+		}
 	}
-	else{
+	else{ // for no pagination
 		database.Product.find(searchObject,function(err,result){    
-        if(err)
-            res.status(500).send({status:err.message});   
-        else
-            res.send(result);                 
+        	if(err){
+            	res.status(500).send({status:err.message}); 
+			}
+        	else{
+            	res.send(result); 
+			}
     	});
 	}	
 }

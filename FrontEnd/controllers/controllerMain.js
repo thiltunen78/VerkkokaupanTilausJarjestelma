@@ -6,8 +6,7 @@ main_module.controller('controllerMain',function($scope,factoryClient){
 				}		
 	
 	$scope.products = [];
-	$scope.pageCount = [];
-	
+	$scope.pageCount = [];	
 	$scope.currentGenre = "";
 	$scope.currentMediaType = "";
 	$scope.currentPage = 1;
