@@ -52,21 +52,14 @@ router.delete('/removeproduct',function(req,res)
 {
 	//remove product image files
 	var toRemoveFiles = [];
-	var file;
-	    
+		    
     if(req.query.forRemoveFiles instanceof Array)
     	toRemoveFiles = req.query.forRemoveFiles;
     else
        	toRemoveFiles.push(req.query.forRemoveFiles); 
 		
-	for(var i=0;i<toRemoveFiles.length;i++){	
-		
-		file = toRemoveFiles[i];			
-		
-		fs.exists(data_dir + file, function(exists) {
-  		if(exists) {				
-    		fs.unlink(data_dir + file);
-		}});
+	for(var i=0;i<toRemoveFiles.length;i++){		
+    	fs.unlink(data_dir + toRemoveFiles[i]);		
 	}	
 	
 	// remove entries from the database

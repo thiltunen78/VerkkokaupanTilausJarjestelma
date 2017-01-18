@@ -35,7 +35,9 @@ main_module.controller('controllerAllProducts',function($scope,factoryAdmin,$loc
 		{            
             //Remove if item was unchecked                        
             removeIdArray.splice(removeIdArray.indexOf(id,0),1);
-			removeFileArray.splice(removeFileArray.indexOf(file,0),1);
+			if(file.length){
+				removeFileArray.splice(removeFileArray.indexOf(file,0),1);
+			}
         }      	
     }    
   
