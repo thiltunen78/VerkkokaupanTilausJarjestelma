@@ -29,7 +29,7 @@
 			<div class="row" style="display:flex; flex-wrap: wrap;">				
 				<div ng-repeat="product in products" class="col-xs-4 col-sm-3 col-md-2">
 					<div class="thumbnail thumbnail-overwrite">
-						<a href="#/product/" class="">
+						<a href="" class="" ng-click="showProduct(product)">
 				  		<img src="/productimages/{{product.imageFileName}}" alt="No Image">
 				  		<div class="thumbnail-caption-overwrite">
 							<h5>{{product.artist}} - {{product.album}}</h5>

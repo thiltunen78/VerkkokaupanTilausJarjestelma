@@ -4,6 +4,41 @@ main_module.factory('factoryClient',function($resource)
 	
 	factory.signedInUser = null;	
 	factory.pageCount = 1;
+	factory.currentBreadcrumbData = {ids:['home'], texts:['Home']};	
+	factory.currentProduct = null;
+	factory.breadcrumbLinkPressedFromProductPage = null;
+	
+	factory.setCurrentProduct = function(product)
+	{
+		factory.currentProduct = product;
+	}
+	
+	factory.setCurrentBreadcrumbData = function(breadcrumbData)
+	{
+		factory.currentBreadcrumbData = breadcrumbData;
+	}
+	
+	factory.getCurrentProduct = function()
+	{
+		return factory.currentProduct;
+	}
+	
+	factory.getCurrentBreadcrumbData = function()
+	{
+		return factory.currentBreadcrumbData;
+	}
+	
+	factory.setBreadcrumbLinkPressedFromProductPage = function(event)
+	{
+		factory.breadcrumbLinkPressedFromProductPage = event;
+	}
+	
+	factory.getBreadcrumbLinkPressedFromProductPage = function()
+	{
+		var event = factory.breadcrumbLinkPressedFromProductPage;
+		factory.breadcrumbLinkPressedFromProductPage = null;
+		return event;
+	}
 	
 	factory.getProducts = function(searchParams, setProducts)
 	{		

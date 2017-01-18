@@ -1,16 +1,20 @@
-main_module.controller('controllerMain',function($scope,factoryClient){
+main_module.controller('controllerMain',function($scope,factoryClient,$location){
 	
-	$scope.breadcrumbData = {		
-				ids:['home'],
-				texts:['Home']
-				}		
-	
+	$scope.breadcrumbData = {ids:['home'], texts:['Home']};	
 	$scope.products = [];
 	$scope.pageCount = [];	
 	$scope.currentGenre = "";
 	$scope.currentMediaType = "";
 	$scope.currentPage = 1;
 		
+	$scope.showProduct = function(product)
+	{
+		factoryClient.setCurrentProduct(product);
+		factoryClient.setCurrentBreadcrumbData($scope.breadcrumbData);
+		
+		$location.path('/product');
+	}
+	
 	getProducts = function(searchParams)
 	{
 		factoryClient.getProducts(searchParams, function setProducts(productArray,pageCount)
@@ -36,11 +40,11 @@ main_module.controller('controllerMain',function($scope,factoryClient){
 	}); 
 	
 	$scope.showProductsFromGenre = function(event,pagenr)
-	{		
+	{				
+		if(pagenr > $scope.pageCount.length)
+			pagenr = $scope.pageCount.length;
 		if(pagenr < 1)
 			pagenr = 1;
-		else if(pagenr > $scope.pageCount.length)
-			pagenr = $scope.pageCount.length;
 		
 		$scope.currentPage = pagenr;
 		
@@ -150,6 +154,16 @@ main_module.controller('controllerMain',function($scope,factoryClient){
 		}
     }
 	
-	//show all products at the start	
-	getProducts({page:1});
+	var event = factoryClient.getBreadcrumbLinkPressedFromProductPage();
+	if(event){
+		console.log("EVENTTI");
+		console.log(event);
+		
+		//show products from genre if breadcrumb link is clicked from the product page
+		$scope.showProductsFromGenre(event,1);
+	}
+	else{	
+		//show all products at the start	
+		getProducts({page:1});
+	}
 });
