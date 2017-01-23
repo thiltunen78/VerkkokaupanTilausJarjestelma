@@ -11,9 +11,7 @@ main_module.controller('controllerProduct',function($scope,factoryClient,$locati
 	});
 	
 	$scope.showProductsFromGenre = function(event)
-	{			
-		console.log("Taalla");
-		console.log(event);
+	{	
 		factoryClient.setBreadcrumbLinkPressedFromProductPage(event);
 		$location.path('/'); // back to main page
 	}
